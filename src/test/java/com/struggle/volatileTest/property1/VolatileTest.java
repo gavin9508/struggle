@@ -1,7 +1,6 @@
-package com.struggle.singleton.volatile1;
+package com.struggle.volatileTest.property1;
 
 import java.util.concurrent.CountDownLatch;
-
 
 
 /**
