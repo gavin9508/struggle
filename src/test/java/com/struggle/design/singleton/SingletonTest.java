@@ -1,8 +1,14 @@
-package com.struggle.designPattern.singleton;
+package com.struggle.design.singleton;
 import com.carrotsearch.sizeof.RamUsageEstimator;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author sly
+ * @version 1.0
+ * @Date 2022/7/21 23:03
+ * @Description 单例测试类
+ */
 public class SingletonTest {
     //测试单例
     public static void main(String[] args) {
@@ -40,6 +46,12 @@ public class SingletonTest {
     }
 }
 
+/**
+ * @author sly
+ * @version 1.0
+ * @Date 2022/7/21 23:03
+ * @Description 非单例对象
+ */
 class Animal{
     private String name;
 
