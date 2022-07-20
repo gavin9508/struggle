@@ -1,9 +1,15 @@
-package com.struggle.designPattern.observer;
+package com.struggle.design.observer;
 
 import java.util.ArrayList;
 import java.util.List;
 
-//被监听的对象
+
+/**
+ * @author sly
+ * @version 1.0
+ * @Date 2022/7/21 23:03
+ * @Description 被监听的对象
+ */
 public class Clock {
     private final List<AbstractInfo> infos = new ArrayList<>();
 
