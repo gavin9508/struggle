@@ -5,6 +5,7 @@
 ```text
 /**
  * JVM字节码指令
+ * byte、short、char、boolean：都以int型来保存
  */
 public class JVMcommand {
     /**
