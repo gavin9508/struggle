@@ -46,17 +46,77 @@
 > 创建一个单例对象 HungrySingleModel , HungrySingleModel 类有它的私有构造函数和本身的一个静态实例。
 > HungrySingleModel 类提供了一个静态方法，供外界获取它的静态实例。 SingletonTest 我们的演示类使用 HungrySingleModel 类来获取对象。
 
+```java
+public class HungrySingleModel {
+    //整个应用只有一个自己的实例---初始化时候创建，不管会不会使用，此方法会浪费内存
+    private static HungrySingleModel instance = new HungrySingleModel();
+
+    //只能自己创建自己
+    private HungrySingleModel() {
+    }
+
+    //需要提供一个方法让外界访问自己
+    public static HungrySingleModel getInstance() {
+        return instance;
+    }
+}
+```
+
 ### 1.3.2 懒汉式
 
 > 1. 延迟加载创建，也就是用到对象的时候，才会创建
 > 2. 线程安全问题需要手动处理(不添加同步方法，线程不安全，添加了同步方法，效率低)
 > 3. 实现容易
 
+```java
+public class LazySingleModel {
+    //整个应用只有一个自己的实例---判断对象是否存在，没有在创建对象（此方法不是线程安全的）
+    private static LazySingleModel instance;//不直接实例化
+
+    //只能自己创建自己
+    private LazySingleModel() {
+    }
+
+    //需要提供一个方法让外界访问自己
+    public static LazySingleModel getInstance() {
+        //instance为空的时候才创建，在多线程的情况下这里是线程不安全的
+        if (instance == null) {
+            instance = new LazySingleModel();
+        }
+        return instance;
+    }
+}
+```
+
 ### 1.3.3 双重检验锁
 
 > 这种方式采用双锁机制，安全且在多线程情况下能保持高性能。
 >
 > 如果有A，B两个线程，第一次判断null,如果A和B为null,这样A和B就是并发场景。A获取锁进入下一个判断为null就会创建实例,释放锁。B获取锁进来，如果没有第二次判断为null，则B还会创建实例。
+
+```java
+public class DoubleTestSingleModel {
+    //整个应用只有自己一个实例
+    private volatile DoubleTestSingleModel instance;
+
+    //只能自己创建自己
+    private DoubleTestSingleModel() {
+    }
+
+    //提供一个外界能访问的方法
+    public DoubleTestSingleModel getInstance() {
+        if (instance == null) {
+            //如果instance为空则创建对象
+            synchronized (DoubleTestSingleModel.class) {
+                if (instance == null) {
+                    this.instance = new DoubleTestSingleModel();
+                }
+            }
+        }
+        return instance;
+    }
+}
+```
 
 ## 1.4 观测者模式---observer
 
@@ -73,7 +133,90 @@
 > 1. 如果一个被观察者对象有很多的直接和间接的观察者的话，将所有的观察者都通知到会花费很多时间
 > 2. 如果在观察者和观察目标之间有循环依赖的话，观察目标会触发它们之间进行循环调用，可能导致系统崩溃
 
-## 1.5 工厂模式---product
+创建监听者抽象类
+
+observer/AbstractInfo.java
+```java
+package com.struggle.design.observer;
+
+public abstract class AbstractInfo {
+    //被监听的对象
+    private Clock clock;
+
+    abstract void message();
+}
+```
+
+监听者抽象类具体实现类--睡觉实现类
+
+observer/AbstractInfo.java
+```java
+package com.struggle.design.observer;
+
+public class SleepInfo extends AbstractInfo {
+    @Override
+    void message() {
+        System.out.println("该休息了，亲！");
+    }
+}
+```
+监听者抽象类具体实现类--学习实现类
+
+observer/AbstractInfo.java
+
+```java
+package com.struggle.design.observer;
+
+public class StudyInfo extends AbstractInfo {
+    @Override
+    void message() {
+        System.out.println("你这么年轻，你怎么敢睡！");
+    }
+}
+```
+被监听者发布消息，监听者执行对应的方法
+
+observer/Clock.java
+```java
+package com.struggle.design.observer;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class Clock {
+    private final List<AbstractInfo> infos = new ArrayList<>();
+
+    public void say() {
+        System.out.println("大家一起卷");
+        //通知
+        update();
+    }
+
+    //添加要得到的通知
+    public void addInfo(AbstractInfo info) {
+        infos.add(info);
+    }
+
+    //通知
+    public void update() {
+        for (AbstractInfo info : infos) {
+            info.message();
+        }
+    }
+
+    public static void main(String[] args) {
+        Clock clock = new Clock();
+        StudyInfo studyInfo = new StudyInfo();
+        SleepInfo sleepInfo = new SleepInfo();
+        clock.addInfo(sleepInfo);
+        clock.addInfo(studyInfo);
+        clock.say();
+    }
+}
+```
+
+
+## 1.5 工厂模式---factory
 
 定义：
 > 工厂模式（Factory Pattern）是 Java 中最常用的设计模式之一。这种类型的设计模式属于创建型模式，它提供了一种
@@ -84,6 +227,80 @@
 > 1. 一个调用者想创建一个对象，只要知道其名称就可以了。
 > 2. 屏蔽产品的具体实现，调用者只关心产品的接口。
 > 3. 降低了耦合度
+
+案例:创建一个接口Product和Product的实现类Mobile以及Car，再定义一个具体的工厂对象
+ProductFactory，并通过ProductFactory来获取指定的Product
+
+factory/Product.java
+
+```java
+package com.struggle.design.factory;
+
+public interface Product {
+    //查看产品详情
+    void show();
+}
+```
+
+factory/Car.java
+
+```java
+package com.struggle.design.factory;
+
+public class Car implements Product {
+    @Override
+    public void show() {
+        System.out.println("汽车：比亚迪！");
+    }
+}
+```
+
+factory/Mobile.java
+
+```java
+package com.struggle.design.factory;
+
+public class Mobile implements Product {
+
+    @Override
+    public void show() {
+        System.out.println("手机：HUAWEI P40 Pro +");
+    }
+}
+```
+
+factory/ProductFactory.java
+
+```java
+package com.struggle.design.factory;
+
+public class ProductFactory {
+    //根据用户的需求创建不同的产品
+    public static Product getBean(String name) {
+        if (name.equals("mobile")) {
+            return new Mobile();
+        } else if (name.equals("car")) {
+            return new Car();
+        }
+        return null;
+    }
+}
+```
+
+factory/ProductFactoryTest.java
+
+```java
+package com.struggle.design.factory;
+
+public class ProductFactoryTest {
+    public static void main(String[] args) {
+        Product mobile = ProductFactory.getBean("mobile");
+        Product car = ProductFactory.getBean("car");
+        mobile.show();
+        car.show();
+    }
+}
+```
 
 说明：
 > 工厂模式的思想主要为：多个类似的子类继承同一个父类，对其父类中的变量进行操作；
@@ -275,12 +492,105 @@ public class App {
 ```
 
 ### 1.7.3 静态代理与动态代理的区别
+
 > 1. 静态代理在编译时就已经实现，编译完成后代理类是一个实际的class 文件
 > 2. 动态代理是在运行时动态生成的，即编译完成后没有实际的 class 文件，而是在运行时动态
-   生成类字节码，并加载到 JVM 中 。
+     生成类字节码，并加载到 JVM 中 。
 
 注意：动态代理对象不需要实现接口，但是要求目标对象必须实现接口，否则不能使用动态代理。
-  
+
 JDK 中生成代理对象主要涉及两个类：
-> 1. 第一个类为 java.lang.reflect.Proxy，通过静态方法newProxyInstance 生成代理对象， 
+> 1. 第一个类为 java.lang.reflect.Proxy，通过静态方法newProxyInstance 生成代理对象，
 > 2. 第二个为java.lang.reflect.InvocationHandler 接口，通过invoke方法对业务进行增强
+
+## 1.8 适配器模式--adapter
+
+定义：
+> 将一个类的接口转换成客户希望的另外一个接口，使得原本由于接口不兼容而不能一起工作的那些类能一起工作。
+
+优点：
+> 1. 可以让任何两个没有关联的类一起运行。
+>  2. 提高了类的复用。
+>  3. 灵活性好。
+
+缺点：
+> 过多地使用适配器，会让系统非常零乱，不易整体进行把握。比如，明明看到调用的是 byA接口，其实内部被适配成了 B接口的
+> 实现，一个系统如果太多出现这种情况，无异于一场灾难
+
+案例：
+> 1. 背景：小成买了一个进口的电视机
+> 2. 冲突：进口电视机要求电压（110V）与国内插头标准输出电压（220V）不兼容
+> 3. 解决方案：设置一个适配器将插头输出的220V转变成110V
+> 4. 步骤1： 创建Target接口（期待得到的插头）：能输出110V
+
+代码实现：
+
+步骤1： 创建Target接口（期待得到的插头）：能输出110V
+
+adapter/Target.java
+
+```java
+package com.open.design.adapter;
+
+public interface Target {
+    //将 220V 转换输出 110V
+    public void Convert_110v();
+}
+```
+
+步骤2： 创建源类（原有的插头） ；
+
+adapter/PowerPort220V.java
+
+```java
+package com.open.design.adapter;
+
+public class PowerPort220V {
+    //原有插头只能输出 220V
+    public void Output_220v() {
+    }
+}
+```
+
+步骤3：创建适配器类（Adapter）
+
+adapter/Adapter220V.java
+
+```java
+package com.open.design.adapter;
+
+public class Adapter220V extends PowerPort220V implements Target {
+    //期待的插头要求调用 Convert_110v()，但原有插头没有,因此适配器补充上这个方法名
+    //但实际上 Convert_110v()只是调用原有插头的 Output_220v()方法的内容
+    //所以适配器只是将 Output_220v()作了一层封装，封装成 Target 可以调用的Convert_110v()而已
+
+    @Override
+    public void Convert_110v() {
+        System.out.println("适配器将 220V 转为 110V");
+        this.Output_220v();
+    }
+}
+```
+步骤4：测试
+
+adapter/ImportedTV.java
+```java
+package com.open.design.adapter;
+
+//通过 Adapter 类从而调用所需要的方法
+public class ImportedTV {
+    public static void main(String[] args) {
+        Target mAdapter220V = new Adapter220V();
+        ImportedTV mImportedMachine = new ImportedTV();
+        //用户拿着进口机器插上适配器（调用 Convert_110v()方法）
+        //再将适配器插上原有插头（Convert_110v()方法内部调用 Output_220v()方法输出 220 V）
+        //适配器只是个外壳，对外提供 110V，但本质还是 220V 进行供电
+        mAdapter220V.Convert_110v();
+        mImportedMachine.Work();
+    }
+
+    public void Work() {
+        System.out.println("TV 正常运行");
+    }
+}
+```
