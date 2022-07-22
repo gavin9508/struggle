@@ -3,13 +3,7 @@ package com.struggle.wkl.unlock;
 import org.openjdk.jol.info.ClassLayout;
 
 /**
- *         <dependency>
- *             <groupId>org.openjdk.jol</groupId>
- *             <artifactId>jol-core</artifactId>
- *             <version>RELEASE</version>
- *         </dependency>
- *
- *         偏向锁
+ * 偏向锁
  */
 public class Person {
     private String name;
@@ -75,7 +69,7 @@ public class Person {
      * @throws Throwable
      */
     public static void main(String[] args) throws Throwable {
-        Thread.sleep(5000);//休眠5秒
+//        Thread.sleep(5000);//休眠5秒
         //创建一个实例
         Person person = new Person();
         //输出信息
@@ -103,6 +97,7 @@ public class Person {
      * OFFSET  SIZE                TYPE DESCRIPTION                               VALUE
      *    0     4                     (object header)                           05 40 da 02 (00000101 01000000 11011010 00000010) (47857669)
      */
+    //不休眠5秒的话 before(001) locked(000) after(001)，即无锁->轻量级锁->无锁
 }
 
 
