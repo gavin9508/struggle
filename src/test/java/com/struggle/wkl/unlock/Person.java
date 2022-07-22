@@ -8,6 +8,8 @@ import org.openjdk.jol.info.ClassLayout;
  *             <artifactId>jol-core</artifactId>
  *             <version>RELEASE</version>
  *         </dependency>
+ *
+ *         偏向锁
  */
 public class Person {
     private String name;
