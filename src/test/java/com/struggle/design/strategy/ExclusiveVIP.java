@@ -1,6 +1,5 @@
 package com.struggle.design.strategy;
 
-import com.struggle.design.strategy.Buyer;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
