@@ -1,6 +1,6 @@
-#  struggle
+# struggle
 
-趁年轻去努力 
+趁年轻去努力
 
 简单的一个SpringBoot项目
 
@@ -12,4 +12,5 @@
 - [对象相关](https://gitee.com/BuZhouDiao/struggle/tree/master/src/test/java/com/struggle/object)
 - [设计模式相关](https://gitee.com/BuZhouDiao/struggle/tree/master/src/test/java/com/struggle/design)
 - [JVM相关](https://gitee.com/BuZhouDiao/struggle/tree/master/src/test/java/com/struggle/memory)
-- [锁相关](https://gitee.com/BuZhouDiao/struggle/tree/master/src/test/java/com/struggle/readme)
+- [锁相关](https://gitee.com/BuZhouDiao/struggle/tree/master/src/test/java/com/struggle/wkl)
+- [数据库相关]()
