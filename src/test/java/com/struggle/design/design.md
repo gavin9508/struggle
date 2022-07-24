@@ -28,18 +28,19 @@
 
 单例模式的优点：
 > 1. 由于单例模式在内存中只有一个实例，减少了内存开支，特别是一个对象需要频繁地创建、销毁时，而且创建或销毁时性能又无法优化，单例模式的优势就非常明显。
-> 2. 由于单例模式只生成一个实例，所以减少了系统的性能开销，当一个对象的产生需要比较多的资源时，如读取配置、产生其他依赖对象时，则可以通过在应用启动时直接产生一个单例对象，然后用永久驻留内存的方式来解决（在Java EE中采用单例模式时需要注意JVM垃圾回收机制）。
+> 2. 由于单例模式只生成一个实例，所以减少了系统的性能开销，当一个对象的产生需要比较多的资源时，如读取配置、产生其他依赖对象时，则可以通过在应用启动时直接产生一个单例对象，然后用永久驻留内存的方式来解决（在Java
+     EE中采用单例模式时需要注意JVM垃圾回收机制）。
 > 3. 单例模式可以避免对资源的多重占用，例如一个写文件动作，由于只有一个实例存在内存中，避免对同一个资源文件的同时写操作。
 > 4. 单例模式可以在系统设置全局的访问点，优化和共享资源访问，例如可以设计一个单例类，负责所有数据表的映射处理。
 
 单例模式的缺点：
-> 1. 单例模式一般没有接口，扩展很困难，若要扩展，除了修改代码基本上没有第二种途径可以实现。单例模式为什么不能增加接口呢？因为接口对单例模式是没有任何意义的，它要求“自行实例化”，并且提供单一实例、接口或抽象类是不可能被实例化的。当然，在特殊情况下，单例模式可以实现接口、被继承等，需要在系统开发中根据环境判断。
+> 1.
+单例模式一般没有接口，扩展很困难，若要扩展，除了修改代码基本上没有第二种途径可以实现。单例模式为什么不能增加接口呢？因为接口对单例模式是没有任何意义的，它要求“自行实例化”，并且提供单一实例、接口或抽象类是不可能被实例化的。当然，在特殊情况下，单例模式可以实现接口、被继承等，需要在系统开发中根据环境判断。
 > 2. 单例模式对测试是不利的。在并行开发环境中，如果单例模式没有完成，是不能进行测试的，没有接口也不能使用mock的方式虚拟一个对象。
 > 3. 单例模式与单一职责原则有冲突。一个类应该只实现一个逻辑，而不关心它是否是单例的，是不是要单例取决于环境，单例模式把“要单例”和业务逻辑融合在一个类中。
 
 单例模式的真实使用场景：
-在一个系统中，要求一个类有且仅有一个对象，如果出现多个对象就会出现“不良反
-     应”，可以采用单例模式，具体的场景如下：
+在一个系统中，要求一个类有且仅有一个对象，如果出现多个对象就会出现“不良反应”，可以采用单例模式，具体的场景如下：
 > 1. 要求生成唯一序列号的环境；
 > 2. 在整个项目中需要一个共享访问点或共享数据，例如一个Web页面上的计数器，可以不用把每次刷新都记录到数据库中，使用单例模式保持计数器的值，并确保是线程安全的；
 > 3. 创建一个对象需要消耗的资源过多，如要访问IO和数据库等资源；
@@ -49,6 +50,8 @@
 > 1. 整个应用只有一个自己的实例
 > 2. 只能自己创建自己
 > 3. 需要提供一个方法让外界访问自己
+
+单例模式通用类图：![](singleton/单例模式通用类图.png)
 
 ### 1.3.1 饿汉式
 
@@ -128,15 +131,119 @@ public class DoubleTestSingleModel {
 ```
 
 ### 1.3.4 单例模式的拓展
+
 需求：如果一个类可以产生多个对象，对象的数量不受限制，则是非常容易实现的，直接使用new关键字就可以了，如果只需要一个对象，使用单例模式就可以了，但是如果要求一个类只能产生两三个对象呢？
 
 > 这种需要产生固定数量对象的模式就叫做有上限的多例模式，它是单例模式的一种扩
-展，采用有上限的多例模式，我们可以在设计时决定在内存中有多少个实例，方便系统进行
-扩展，修正单例可能存在的性能问题，提供系统的响应速度。例如读取文件，我们可以在系
-统启动时完成初始化工作，在内存中启动固定数量的reader实例，然后在需要读取文件时就
-可以快速响应
+> 展，采用有上限的多例模式，我们可以在设计时决定在内存中有多少个实例，方便系统进行
+> 扩展，修正单例可能存在的性能问题，提供系统的响应速度。例如读取文件，我们可以在系
+> 统启动时完成初始化工作，在内存中启动固定数量的reader实例，然后在需要读取文件时就
+> 可以快速响应
 
-## 1.4 观测者模式---observer
+## 1.4 工厂模式---factory
+
+定义：
+> 工厂模式（Factory Pattern）是 Java 中最常用的设计模式之一。这种类型的设计模式属于创建型模式，它提供了一种
+> 创建对象的最佳方式。它负责实现创建所有实例的内部逻辑。工厂类的创建产品类的方法可以被外界直接调用，创建所需的
+> 产品对象
+
+优点：
+> 1. 一个调用者想创建一个对象，只要知道其名称就可以了。
+> 2. 屏蔽产品的具体实现，调用者只关心产品的接口。
+> 3. 降低了耦合度
+
+单例模式通用类图：
+
+![](factory/工厂模式通用类图.png)
+
+在工厂方法模式中，抽象产品类Product负责定义产品的共性，实现对事物最抽象的定
+义；Creator为抽象创建类，也就是抽象工厂，具体如何创建产品类是由具体的实现工厂
+ConcreteCreator完成的。工厂方法模式的变种较多，我们来看一个比较实用的通用源码
+
+抽象产品类
+
+```java
+public abstract class Product {
+    //产品类的公共方法
+    public void method1() {
+        //业务逻辑处理
+    }
+
+    //抽象方法
+    public abstract void method2();
+}
+```
+
+具体的产品类可以有多个，都继承于抽象产品类。
+
+具体产品类：
+
+```java
+public class ConcreteProduct1 extends Product {
+    public void method2() {
+        //业务逻辑处理
+    }
+}
+
+public class ConcreteProduct2 extends Product {
+    public void method2() {
+        //业务逻辑处理
+    }
+}
+```
+
+抽象工厂类负责定义产品对象的产生。
+
+抽象工厂类：
+
+```java
+public abstract class Creator {
+    /*
+
+     * 创建一个产品对象，其输入参数类型可以自行设置
+     * 通常为String、Enum、Class等，当然也可以为空
+     */
+    public abstract <T extends Product> T createProduct(Class<T> c);
+}
+```
+
+具体如何产生一个产品的对象，是由具体的工厂类实现的。
+
+具体工厂类：
+
+```java
+public class ConcreteCreator extends Creator {
+    public <T extends Product> T createProduct(Class<T> c) {
+        Product product = null;
+        try {
+            product = (Product) Class.forName(c.getName()).newInstance();
+        } catch (Exception e) {
+            //异常处理
+        }
+        return (T) product;
+    }
+}
+```
+
+场景类：
+```java
+public class Client {
+    public static void main(String[] args) {
+        Creator creator = new ConcreteCreator();
+        Product product = creator.createProduct(ConcreteProduct1.class);
+        /*
+
+         * 继续业务处理
+         */
+    }
+}
+```
+
+说明：
+> 工厂模式的思想主要为：多个类似的子类继承同一个父类，对其父类中的变量进行操作；
+> 工厂类负责判断、控制哪个子类被执行，而工厂类调用子类完成后，返回的结果是该子类的父类，该父类中的变量已经被操作过了，访问该父类，得到我们想要的结果。
+
+## 1.6 观测者模式---observer
 
 定义：
 > 对象之间存在一对多或者一对一依赖，当一个状态改变，依赖他的对象会收到他的消息并自动更新
@@ -151,183 +258,86 @@ public class DoubleTestSingleModel {
 > 1. 如果一个被观察者对象有很多的直接和间接的观察者的话，将所有的观察者都通知到会花费很多时间
 > 2. 如果在观察者和观察目标之间有循环依赖的话，观察目标会触发它们之间进行循环调用，可能导致系统崩溃
 
-创建监听者抽象类
+观察者模式的使用场景
+> 1. 关联行为场景。需要注意的是，关联行为是可拆分的，而不是“组合”关系。
+> 2. 事件多级触发场景。
+> 3. 跨系统的消息交换场景，如消息队列的处理机制。
 
-observer/AbstractInfo.java
+观察者模式通用类图：![](observer/观察者模式通用类图.png)
+我们先来解释一下观察者模式的几个角色名称：
+> 1. Subject被观察者：定义被观察者必须实现的职责，它必须能够动态地增加、取消观察者。它一般是抽象类 或者是实现类，仅仅完成作为被观察者必须实现的职责：管理观察者并通知观察者。
+> 2. Observer观察者：观察者接收到消息后，即进行update（更新方法）操作，对接收到的信息进行处理。
+> 3. ConcreteSubject具体的被观察者定义被观察者自己的业务逻辑，同时定义对哪些事件进行通知。
+> 4. ConcreteObserver具体的观察者每个观察在接收到消息后的处理反应是不同，各个观察者有自己的处理逻辑。
 
-```java
-package com.struggle.design.observer;
-
-public abstract class AbstractInfo {
-    //被监听的对象
-    private Clock clock;
-
-    abstract void message();
-}
-```
-
-监听者抽象类具体实现类--睡觉实现类
-
-observer/AbstractInfo.java
+被观察者：
 
 ```java
-package com.struggle.design.observer;
+public abstract class Subject {
+    //定义一个观察者数组
+    private Vector<Observer> obsVector = new Vector<Observer>();
 
-public class SleepInfo extends AbstractInfo {
-    @Override
-    void message() {
-        System.out.println("该休息了，亲！");
+    //增加一个观察者
+    public void addObserver(Observer o) {
+        this.obsVector.add(o);
+    }
+
+    //删除一个观察者
+    public void delObserver(Observer o) {
+        this.obsVector.remove(o);
+    }
+
+    //通知所有观察者
+    public void notifyObservers() {
+        for (Observer o : this.obsVector) {
+            o.update();
+        }
     }
 }
 ```
-监听者抽象类具体实现类--学习实现类
 
-observer/AbstractInfo.java
+被观察者的职责非常简单，就是定义谁能够观察，谁不能观察，程序中使用ArrayList和
+Vector没有太大的差别，ArrayList是线程异步，不安全；Vector是线程同步，安全——就这点
+区别。
+
+具体被观察者：
 
 ```java
-package com.struggle.design.observer;
-
-public class StudyInfo extends AbstractInfo {
-    @Override
-    void message() {
-        System.out.println("你这么年轻，你怎么敢睡！");
+public class ConcreteSubject extends Subject {
+    //具体的业务
+    public void doSomething() {
+        /*
+         * do something
+         */
+        super.notifyObservers();
     }
 }
-```
-被监听者发布消息，监听者执行对应的方法
 
-observer/Clock.java
+```
+
+观察者:
 
 ```java
-package com.struggle.design.observer;
+public interface Observer {
+    //更新方法
+    public void update();
+}
+```
 
-import java.util.ArrayList;
-import java.util.List;
+观察者一般是一个接口，每一个实现该接口的实现类都是具体观察者
 
-public class Clock {
-    private final List<AbstractInfo> infos = new ArrayList<>();
+具体观察者：
 
-    public void say() {
-        System.out.println("大家一起卷");
-        //通知
-        update();
-    }
-
-    //添加要得到的通知
-    public void addInfo(AbstractInfo info) {
-        infos.add(info);
-    }
-
-    //通知
+```java
+public class ConcreteObserver implements Observer {
+    //实现更新方法
     public void update() {
-        for (AbstractInfo info : infos) {
-            info.message();
-        }
-    }
-
-    public static void main(String[] args) {
-        Clock clock = new Clock();
-        StudyInfo studyInfo = new StudyInfo();
-        SleepInfo sleepInfo = new SleepInfo();
-        clock.addInfo(sleepInfo);
-        clock.addInfo(studyInfo);
-        clock.say();
+        System.out.println("接收到信息，并进行处理！");
     }
 }
 ```
 
-
-## 1.5 工厂模式---factory
-
-定义：
-> 工厂模式（Factory Pattern）是 Java 中最常用的设计模式之一。这种类型的设计模式属于创建型模式，它提供了一种
-> 创建对象的最佳方式。它负责实现创建所有实例的内部逻辑。工厂类的创建产品类的方法可以被外界直接调用，创建所需的
-> 产品对象
-
-优点：
-> 1. 一个调用者想创建一个对象，只要知道其名称就可以了。
-> 2. 屏蔽产品的具体实现，调用者只关心产品的接口。
-> 3. 降低了耦合度
-
-案例:创建一个接口Product和Product的实现类Mobile以及Car，再定义一个具体的工厂对象
-ProductFactory，并通过ProductFactory来获取指定的Product
-
-factory/Product.java
-
-```java
-package com.struggle.design.factory;
-
-public interface Product {
-    //查看产品详情
-    void show();
-}
-```
-
-factory/Car.java
-
-```java
-package com.struggle.design.factory;
-
-public class Car implements Product {
-    @Override
-    public void show() {
-        System.out.println("汽车：比亚迪！");
-    }
-}
-```
-
-factory/Mobile.java
-
-```java
-package com.struggle.design.factory;
-
-public class Mobile implements Product {
-
-    @Override
-    public void show() {
-        System.out.println("手机：HUAWEI P40 Pro +");
-    }
-}
-```
-
-factory/ProductFactory.java
-
-```java
-package com.struggle.design.factory;
-
-public class ProductFactory {
-    //根据用户的需求创建不同的产品
-    public static Product getBean(String name) {
-        if (name.equals("mobile")) {
-            return new Mobile();
-        } else if (name.equals("car")) {
-            return new Car();
-        }
-        return null;
-    }
-}
-```
-
-factory/ProductFactoryTest.java
-
-```java
-package com.struggle.design.factory;
-
-public class ProductFactoryTest {
-    public static void main(String[] args) {
-        Product mobile = ProductFactory.getBean("mobile");
-        Product car = ProductFactory.getBean("car");
-        mobile.show();
-        car.show();
-    }
-}
-```
-
-说明：
-> 工厂模式的思想主要为：多个类似的子类继承同一个父类，对其父类中的变量进行操作；
-> 工厂类负责判断、控制哪个子类被执行，而工厂类调用子类完成后，返回的结果是该子类的父类，该父类中的变量已经被操作过了，访问该父类，得到我们想要的结果。
-
-## 1.6 策略模式--strategy
+## 1.7 策略模式--strategy
 
 策略模式，指的是定义一系列算法，将每一个算法封装起来，并让它们可以相互替换。策略模式让算法独立于使用它的客户而变化。
 
@@ -339,7 +349,7 @@ public class ProductFactoryTest {
 > 1. 客户端必须知道所有的策略类，并自行决定使用哪一个策略类。这就意味着客户端必须理解这些算法的区别，以便适时选择恰当的算法类。换言之，策略模式只适用于客户端知道算法或行为的情况。
 > 2. 由于策略模式把每个具体的策略实现都单独封装成为类，如果备选的策略很多的话，那么对象的数目就会很可观。
 
-## 1.7 代理模式--proxy
+## 1.8 代理模式--proxy
 
 定义：
 > 给目标对象提供一个代理对象，并由代理对象控制对目标对象的引用；
@@ -351,7 +361,7 @@ public class ProductFactoryTest {
 
 代理模式有静态代理和动态代理两种实现方式。
 
-### 1.7.1 静态代理
+### 1.8.1 静态代理
 
 这种代理方式需要代理对象和目标对象实现一样的接口。
 
@@ -592,9 +602,11 @@ public class Adapter220V extends PowerPort220V implements Target {
     }
 }
 ```
+
 步骤4：测试
 
 adapter/ImportedTV.java
+
 ```java
 package com.open.design.adapter;
 
