@@ -11,5 +11,11 @@ public class ProductFactoryTest {
         Product car = ProductFactory.getBean("car");
         mobile.show();
         car.show();
+
+        //测试反射实现的工厂处理
+        Mobile mobile1 = ProductFactory.createProduct(Mobile.class);
+        mobile1.show();
+        Car car2 = ProductFactory.createProduct(Car.class);
+        car2.show();
     }
 }
