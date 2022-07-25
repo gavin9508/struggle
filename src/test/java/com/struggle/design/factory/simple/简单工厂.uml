@@ -1,15 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Diagram>
   <ID>JAVA</ID>
-  <OriginalElement>com.struggle.design.factory.simple.CarFactory</OriginalElement>
+  <OriginalElement>com.struggle.design.factory.simple.Car</OriginalElement>
   <nodes>
-    <node x="0.0" y="0.0">com.struggle.design.factory.simple.CarFactory</node>
+    <node x="312.0" y="113.0">com.struggle.design.factory.simple.Tesla</node>
+    <node x="156.0" y="0.0">com.struggle.design.factory.simple.Car</node>
+    <node x="156.0" y="113.0">com.struggle.design.factory.simple.WuLing</node>
+    <node x="0.0" y="113.0">com.struggle.design.factory.simple.DaZhong</node>
+    <node x="0.0" y="248.0">com.struggle.design.factory.simple.CarFactory</node>
   </nodes>
   <notes />
-  <edges />
-  <settings layout="Hierarchic" zoom="1.0" showDependencies="false" x="89.0" y="71.5" />
+  <edges>
+    <edge source="com.struggle.design.factory.simple.DaZhong" target="com.struggle.design.factory.simple.Car" relationship="REALIZATION">
+      <point x="0.0" y="-45.0" />
+      <point x="68.0" y="88.0" />
+      <point x="224.0" y="88.0" />
+      <point x="0.0" y="31.5" />
+    </edge>
+    <edge source="com.struggle.design.factory.simple.Tesla" target="com.struggle.design.factory.simple.Car" relationship="REALIZATION">
+      <point x="0.0" y="-45.0" />
+      <point x="380.0" y="88.0" />
+      <point x="224.0" y="88.0" />
+      <point x="0.0" y="31.5" />
+    </edge>
+    <edge source="com.struggle.design.factory.simple.WuLing" target="com.struggle.design.factory.simple.Car" relationship="REALIZATION">
+      <point x="0.0" y="-45.0" />
+      <point x="0.0" y="31.5" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic" zoom="1.0" showDependencies="false" x="224.0" y="195.5" />
   <SelectedNodes>
-    <node>com.struggle.design.factory.simple.CarFactory</node>
+    <node>com.struggle.design.factory.simple.Car</node>
   </SelectedNodes>
   <Categories>
     <Category>Constructors</Category>
