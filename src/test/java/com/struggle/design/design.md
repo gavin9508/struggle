@@ -627,3 +627,14 @@ public class ImportedTV {
     }
 }
 ```
+## 1.8 装饰者模式--decorate
+
+定义：
+> 装饰者模式可以动态地给对象添加一些额外的属性或行为。
+
+优点：
+> 相比于使用继承，装饰者模式更加灵活
+
+案例：
+> JDK中InputStream家族就使用了经典的装饰者模式
+> ![](decorate/javaIo.jpg)
