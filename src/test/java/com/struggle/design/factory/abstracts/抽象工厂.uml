@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>com.struggle.design.factory.abstracts.IproductFactory</OriginalElement>
+  <nodes>
+    <node x="279.0" y="543.0">com.struggle.design.factory.abstracts.XiaoMiFactory</node>
+    <node x="93.0" y="0.0">com.struggle.design.factory.abstracts.IRouterProduct</node>
+    <node x="598.0" y="191.0">com.struggle.design.factory.abstracts.XiaoMiPhone</node>
+    <node x="0.0" y="543.0">com.struggle.design.factory.abstracts.HuaWeiFactory</node>
+    <node x="139.5" y="404.0">com.struggle.design.factory.abstracts.IproductFactory</node>
+    <node x="411.0" y="191.0">com.struggle.design.factory.abstracts.HuaWeiPhone</node>
+    <node x="190.0" y="191.0">com.struggle.design.factory.abstracts.HuaWeiIRouter</node>
+    <node x="0.0" y="191.0">com.struggle.design.factory.abstracts.XiaoMiIRouter</node>
+    <node x="501.0" y="0.0">com.struggle.design.factory.abstracts.IphoneProduct</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="com.struggle.design.factory.abstracts.HuaWeiIRouter" target="com.struggle.design.factory.abstracts.IRouterProduct" relationship="REALIZATION">
+      <point x="0.0" y="-84.0" />
+      <point x="278.0" y="166.0" />
+      <point x="181.5" y="166.0" />
+      <point x="0.0" y="70.5" />
+    </edge>
+    <edge source="com.struggle.design.factory.abstracts.XiaoMiFactory" target="com.struggle.design.factory.abstracts.IproductFactory" relationship="REALIZATION">
+      <point x="0.0" y="-58.0" />
+      <point x="408.5" y="518.0" />
+      <point x="269.0" y="518.0" />
+      <point x="0.0" y="44.5" />
+    </edge>
+    <edge source="com.struggle.design.factory.abstracts.HuaWeiFactory" target="com.struggle.design.factory.abstracts.IproductFactory" relationship="REALIZATION">
+      <point x="0.0" y="-58.0" />
+      <point x="129.5" y="518.0" />
+      <point x="269.0" y="518.0" />
+      <point x="0.0" y="44.5" />
+    </edge>
+    <edge source="com.struggle.design.factory.abstracts.XiaoMiPhone" target="com.struggle.design.factory.abstracts.IphoneProduct" relationship="REALIZATION">
+      <point x="0.0" y="-84.0" />
+      <point x="680.5" y="166.0" />
+      <point x="587.5" y="166.0" />
+      <point x="0.0" y="70.5" />
+    </edge>
+    <edge source="com.struggle.design.factory.abstracts.XiaoMiIRouter" target="com.struggle.design.factory.abstracts.IRouterProduct" relationship="REALIZATION">
+      <point x="0.0" y="-84.0" />
+      <point x="85.0" y="166.0" />
+      <point x="181.5" y="166.0" />
+      <point x="0.0" y="70.5" />
+    </edge>
+    <edge source="com.struggle.design.factory.abstracts.HuaWeiPhone" target="com.struggle.design.factory.abstracts.IphoneProduct" relationship="REALIZATION">
+      <point x="0.0" y="-84.0" />
+      <point x="494.5" y="166.0" />
+      <point x="587.5" y="166.0" />
+      <point x="0.0" y="70.5" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic" zoom="0.7952871870397643" showDependencies="false" x="381.5" y="329.5" />
+  <SelectedNodes>
+    <node>com.struggle.design.factory.abstracts.IproductFactory</node>
+  </SelectedNodes>
+  <Categories>
+    <Category>Constructors</Category>
+    <Category>Fields</Category>
+    <Category>Inner Classes</Category>
+    <Category>Methods</Category>
+    <Category>Properties</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+
