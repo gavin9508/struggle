@@ -226,6 +226,7 @@ public class ConcreteCreator extends Creator {
 ```
 
 场景类：
+
 ```java
 public class Client {
     public static void main(String[] args) {
@@ -242,6 +243,115 @@ public class Client {
 说明：
 > 工厂模式的思想主要为：多个类似的子类继承同一个父类，对其父类中的变量进行操作；
 > 工厂类负责判断、控制哪个子类被执行，而工厂类调用子类完成后，返回的结果是该子类的父类，该父类中的变量已经被操作过了，访问该父类，得到我们想要的结果。
+
+## 1.5 抽象工厂模式
+
+定义：
+> 为创建一组相关或相互依赖的对象提供一个接口，而且无须指定它们的具体类
+
+优点：
+> 1. 封装性，每个产品的实现类不是高层模块要关心的，它要关心的是什么？是接口，是抽象，它不关心对象是如何创建出来，这由谁负责呢？工厂类，只要知道工厂类是谁，我就能创建出一个需要的对象，省时省力，优秀设计就应该如此。
+> 2. 产品族内的约束为非公开状态。例如生产男女比例的问题上，猜想女娲娘娘肯定有自己的打算，不能让女盛男衰，否则女性的优点不就体现不出来了吗？那在抽象工厂模式，就应该有这样的一个约束：每生产1个女性，就同时生产出1.2个男性，这样的生产过程对调用工厂类的高层模块来说是透明的，它不需要知道这个约束，我就是要一个黄色女性产品就可以了，具体的产品族内的约束是在工厂内实现的
+
+使用场景：
+> 抽象工厂模式的使用场景定义非常简单：一个对象族（或是一组没有任何关系的对象）
+都有相同的约束，则可以使用抽象工厂模式。什么意思呢？例如一个文本编辑器和一个图片处理器，都是软件实体，但是*
+nix下的文本编辑器和Windows下的文本编辑器虽然功能和界面都相同，但是代码实现是不同的，图片处理器也有类似情况。也就是具有了共同的约束条
+件：操作系统类型。于是我们可以使用抽象工厂模式，产生不同操作系统下的编辑器和图片处理器。
+
+抽象工厂模式的通用类图：
+![](abstractFactory/抽象工厂模式的通用类图.png)
+抽象产品类
+
+```java
+public abstract class AbstractProductA {
+    //每个产品共有的方法
+    public void shareMethod() {
+    }
+
+    //每个产品相同方法，不同实现
+    public abstract void doSomething();
+}
+```
+
+产品实现类
+
+```java
+public class ProductA1 extends AbstractProductA {
+    public void doSomething() {
+        System.out.println("产品A1的实现方法");
+    }
+}
+
+public class ProductA2 extends AbstractProductA {
+    public void doSomething() {
+        System.out.println("产品A2的实现方法");
+    }
+}
+```
+
+抽象工厂类：
+
+```java
+public abstract class AbstractCreator {
+    //创建A产品家族
+    public abstract AbstractProductA createProductA();
+
+    //创建B产品家族
+    public abstract AbstractProductB createProductB();
+}
+```
+
+产品实现类：
+
+```java
+public class Creator1 extends AbstractCreator {
+    //只生产产品等级为1的A产品
+    public AbstractProductA createProductA() {
+        return new ProductA1();
+    }
+
+    //只生产产品等级为1的B产品
+    public AbstractProductB createProductB() {
+        return new ProductB1();
+    }
+}
+
+public class Creator2 extends AbstractCreator {
+    //只生产产品等级为2的A产品
+    public AbstractProductA createProductA() {
+        return new ProductA2();
+    }
+
+    //只生产产品等级为2的B产品
+    public AbstractProductB createProductB() {
+        return new ProductB2();
+    }
+}
+```
+
+场景类：
+
+```java
+public class Client {
+    public static void main(String[] args) {
+        //定义出两个工厂
+        AbstractCreator creator1 = new Creator1();
+        AbstractCreator creator2 = new Creator2();
+        //产生A1对象
+        AbstractProductA a1 = creator1.createProductA();
+        //产生A2对象
+        AbstractProductA a2 = creator2.createProductA();
+        //产生B1对象
+        AbstractProductB b1 = creator1.createProductB();
+        //产生B2对象
+        AbstractProductB b2 = creator2.createProductB();
+        /*
+         * 然后在这里就可以为所欲为了...
+         */
+    }
+}
+```
 
 ## 1.6 观测者模式---observer
 
