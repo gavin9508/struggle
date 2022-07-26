@@ -7,4 +7,6 @@ package com.struggle.design.proxy.dynamicProxy;
  */
 public interface IUserDao {
     void save();
+
+    boolean save(String data);
 }

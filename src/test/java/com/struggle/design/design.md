@@ -542,6 +542,11 @@ public class App {
 ### 1.7.2 动态代理
 
 动态代理利用了JDK API，动态地在内存中构建代理对象，从而实现对目标对象的代理功能。 动态代理又被称为JDK代理或接口代理。
+> 在动态代理中， 主要核心是Proxy类和InvocationHandler接口。
+> 
+> 1.使用Proxy类中 newProxyInstance() 方法来生成代理对象
+> 
+> 2.实现InvocationHandler来自定义处理逻辑，当使用动态代理调用方法时会转到InvocationHandler 接口类的 invoke 方法。
 
 dynamicProxy/IUserDao.java
 

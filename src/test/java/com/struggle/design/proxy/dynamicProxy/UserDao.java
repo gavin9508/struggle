@@ -11,4 +11,10 @@ public class UserDao implements IUserDao {
     public void save() {
         System.out.println("保存数据");
     }
+
+    @Override
+    public boolean save(String data) {
+        System.out.println("保存数据："+data);
+        return true;
+    }
 }

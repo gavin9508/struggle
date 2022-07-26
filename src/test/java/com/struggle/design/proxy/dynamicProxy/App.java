@@ -13,5 +13,10 @@ public class App {
         IUserDao proxy = (IUserDao) new
                 ProxyFactory(target).getProxyInstance();
         proxy.save();
+
+        System.out.println("=============================================");
+        //获取日志代理对象
+        IUserDao logProxy = (IUserDao) ProxyFactory.getLogProxy(target);
+        logProxy.save("获得万天帝一只");
     }
 }
