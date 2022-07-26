@@ -1,4 +1,4 @@
-package com.struggle.wkl.unlock;
+package com.struggle.object.unlock;
 
 import org.openjdk.jol.info.ClassLayout;
 
@@ -65,6 +65,7 @@ public class Person {
 
     /**
      * jvm使用偏向锁是有延迟的，在系统启动4s后才开启偏向锁
+     *
      * @param args
      * @throws Throwable
      */
