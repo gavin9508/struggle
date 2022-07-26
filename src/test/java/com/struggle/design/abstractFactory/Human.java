@@ -3,7 +3,7 @@ package com.struggle.design.abstractFactory;
 /**
  * @Author sly
  * @Date 2022/7/25 22:04
- * @Description
+ * @Description 人种接口
  */
 public interface Human {
     //每个人种都有相应的颜色

@@ -3,7 +3,7 @@ package com.struggle.design.abstractFactory;
 /**
  * @Author sly
  * @Date 2022/7/25 22:11
- * @Description
+ * @Description 女性工厂生产流水线
  */
 public class FemaleFactory implements HumanFactory{
     //生产出黑人女性
