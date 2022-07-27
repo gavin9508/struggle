@@ -14,3 +14,4 @@
 - [JVM相关](https://gitee.com/BuZhouDiao/struggle/blob/master/src/test/java/com/struggle/memory/memory.md)
 - [锁相关](https://gitee.com/BuZhouDiao/struggle/blob/master/src/test/java/com/struggle/wkl/Day_0719_%E9%94%81.MD)
 - [数据库相关](https://gitee.com/BuZhouDiao/struggle/blob/master/src/test/java/com/struggle/database/normal.md)
+- [Java反射](https://gitee.com/BuZhouDiao/struggle/blob/master/src/test/java/com/struggle/reflection/reflection.md)
