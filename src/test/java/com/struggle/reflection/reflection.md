@@ -36,7 +36,7 @@
 | getSuperClass()            | 获取当前继承的父类名字                 |
 | getInstances               | 获取当先类实现的雷或是接口               |
 
-### 1.3.1.2 获取类中的属性方法
+#### 1.3.1.2 获取类中的属性方法
 | 方法                            | 用途          |
 |-------------------------------|:------------|
 | getField(String name)         | 获取某个公有的属性对象 |
@@ -44,7 +44,7 @@
 | getDeclaredField(String name) | 获取某个属性对象    |
 | getDeclaredFields()           | 获取所有属性对象    |
 
-### 1.3.1.3 获取类中方法的方法
+#### 1.3.1.3 获取类中方法的方法
 | 方法                                                        | 用途          |
 |-----------------------------------------------------------|:------------|
 | getMethod(String name,Class...<T> parameterTypes)         | 获得该类某个公有的方法 |
@@ -52,7 +52,7 @@
 | getDeclaredMethod(String name,Class...<T> parameterTypes) | 获得该类某个方法    |
 | getDeclaredMethods()                                      | 获得该类所有方法    |
 
-### 1.3.1.4 获取类中构造器的方法
+#### 1.3.1.4 获取类中构造器的方法
 | 方法                                                 | 用途                  |
 |----------------------------------------------------|:--------------------|
 | getConstructor(Class...<T> parameterTypes)         | 获得该类中与参数类型匹配的公有构造方法 |
@@ -60,7 +60,7 @@
 | getDeclaredConstructor(Class...<T> parameterTypes) | 获得该类中与参数类型匹配的构造方法   |
 | getDeclaredConstructors()                          | 获得该类所有构造方法          |
 
-## 1.3.2 Filed类
+### 1.3.2 Filed类
 | 方法                           | 用途              |
 |------------------------------|:----------------|
 | equals(Object obj)           | 属性与obj相等则返回true |
