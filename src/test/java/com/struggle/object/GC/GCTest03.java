@@ -1,4 +1,4 @@
-package com.struggle.object.gc;
+package com.struggle.object.GC;
 
 /**
  * -Xms10m -Xmx10m -XX:+PrintGCDetails

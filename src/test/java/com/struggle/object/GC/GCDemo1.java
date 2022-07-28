@@ -1,4 +1,4 @@
-package com.struggle.object.gc;
+package com.struggle.object.GC;
 
 /**
  * -XX:+PrintGCDetails -XX:+PrintGCDateStamps -Xloggc:./gc.log
