@@ -56,7 +56,15 @@ ThreadPoolExecutor类提供了4个构造函数，设计到7个参数。其中前
 > 2.maximumPoolSize : 当队列中存放的任务达到队列容量的时候，当前可以同时运行的线程数量变为最大线程数。
 > 
 > 3.workQueue: 阻塞队列，维护着等待执行的Runnable任务对象。（当新任务来的时候会先判断当前运行的线程数量是否达到核心线程数，如果达到的话，新任务就会被存放在队列中。）
-> 
+ 
+    3.1:LinkedBlockingQueue:链式阻塞队列，底层数据结构是链表，默认大小是Integer.MAX_VALUE，也可以指定大小。
+  
+    3.2:ArrayBlockingQueue:数组阻塞队列，底层数据结构是数组，需要指定队列的大小。
+ 
+    3.3:SynchronousQueue:同步队列，内部容量为0，每个put操作必须等待一个take操作，反之亦然。
+ 
+    3.4:DelayQueue:延迟队列，该队列中的元素只有当其指定的延迟时间到了，才能够从队列中获取到该元素 。
+>  
 > 4.keepAliveTime:非核心线程闲置超时时长。
 > 
 > 5.unit：keepAliveTime 参数的时间单位，是一个枚举。
@@ -72,3 +80,45 @@ ThreadPoolExecutor类提供了4个构造函数，设计到7个参数。其中前
     7.3：ThreadPoolExecutor.DiscardOldestPolicy：丢弃队列头部（最旧的）的任务，然后重新尝试执行程序（如果再次失败，重复此过程）。
 
     7.4：ThreadPoolExecutor.CallerRunsPolicy：由调用线程处理该任务。
+
+### 线程池创建线程流程
+此流程可以使用ThreadPoolTest调整参数进行测试；
+
+![](../thread/img/线程池创建流程.png)
+
+### 四种常见线程池
+#### 1.newFixedThreadPool
+       public static ExecutorService newFixedThreadPool(int nThreads) {
+            return new ThreadPoolExecutor(nThreads, nThreads,
+                                          0L, TimeUnit.MILLISECONDS,
+                                          new LinkedBlockingQueue<Runnable>());
+       }
+核心线程数量和总线程数量相等，都是传入的参数nThreads，所以只能创建核心线程。线程不会被回收。
+
+#### 2.newCachedThreadPool
+        public static ExecutorService newCachedThreadPool() {
+            return new ThreadPoolExecutor(0, Integer.MAX_VALUE,
+                                          60L, TimeUnit.SECONDS,
+                                          new SynchronousQueue<Runnable>());
+        }
+当需要执行很多短时间的任务时，CacheThreadPool的线程复用率比较高， 会显著的提高性能。线程60s后会回收。
+
+#### 3.newSingleThreadExecutor
+        public static ExecutorService newSingleThreadExecutor() {
+            return new FinalizableDelegatedExecutorService
+                (new ThreadPoolExecutor(1, 1,
+                                        0L, TimeUnit.MILLISECONDS,
+                                        new LinkedBlockingQueue<Runnable>()));
+        }
+有且仅有一个核心线程，不会创建非核心线程。所有任务按照先来先执行的顺序执行
+
+#### 3.newScheduledThreadPool
+        public static ScheduledExecutorService newScheduledThreadPool(int corePoolSize) {
+            return new ScheduledThreadPoolExecutor(corePoolSize);
+        }   
+
+        public ScheduledThreadPoolExecutor(int corePoolSize) {
+            super(corePoolSize, Integer.MAX_VALUE, 0, NANOSECONDS,
+                  new DelayedWorkQueue());
+        }
+创建一个定长线程池，支持定时及周期性任务执行。 
