@@ -2,7 +2,7 @@
 
 趁年轻去努力
 ## struggle-note 学习笔记
-- [volatile](https://gitee.com/BuZhouDiao/struggle/blob/master/struggle-note/src/main/java/com/struggle/volatilevolatile.md)
+- [volatile](https://gitee.com/BuZhouDiao/struggle/blob/master/struggle-note/src/main/java/com/struggle/volatileTest/volatile.md)
 - [thread](https://gitee.com/BuZhouDiao/struggle/blob/master/struggle-note/src/main/java/com/struggle/thread/thread.md)
 - [对象](https://gitee.com/BuZhouDiao/struggle/blob/master/struggle-note/src/main/java/com/struggle/object/object.md)
 - [设计模式](https://gitee.com/BuZhouDiao/struggle/blob/master/struggle-note/src/main/java/com/struggle/design/design.md)

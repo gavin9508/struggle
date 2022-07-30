@@ -43,6 +43,9 @@
 | @ApiModelProperty(value = “xxx属性说明”,hidden = true)   | 作用在类方法和属性上，hidden设置为true可以隐藏该属性  |
 | @ApiParam(“xxx参数说明”)    | 作用在参数、方法和字段上                     |
 
+## swagger2 访问地址
+**http://localhost:8080/swagger-ui.html**
 ## 版本问题
 Spring Boot 2.5.6 兼容Swagger 2.9.2
+
 Spring Boot 2.6.5 兼容Swagger 3.0.0
