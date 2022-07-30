@@ -19,27 +19,27 @@
 ### Maven 阿里云(Aliyun)仓库
 Maven 仓库默认在国外， 国内使用难免很慢，我们可以更换为阿里云的仓库。
 
-<mirror>
-  <id>aliyunmaven</id>
-  <mirrorOf>*</mirrorOf>
-  <name>阿里云公共仓库</name>
-  <url>https://maven.aliyun.com/repository/public</url>
-</mirror>
+    <mirror>
+      <id>aliyunmaven</id>
+      <mirrorOf>*</mirrorOf>
+      <name>阿里云公共仓库</name>
+      <url>https://maven.aliyun.com/repository/public</url>
+    </mirror>
 
 ### 代理仓库
 代理可在 <repositories></repositories> 节点中加入对应的仓库使用地址。
 spring 代理仓如下：
 
-<repository>
-  <id>spring</id>
-  <url>https://maven.aliyun.com/repository/spring</url>
-  <releases>
-    <enabled>true</enabled>
-  </releases>
-  <snapshots>
-    <enabled>true</enabled>
-  </snapshots>
-</repository>
+    <repository>
+      <id>spring</id>
+      <url>https://maven.aliyun.com/repository/spring</url>
+      <releases>
+        <enabled>true</enabled>
+      </releases>
+      <snapshots>
+        <enabled>true</enabled>
+      </snapshots>
+    </repository>
 
 ### Maven 构建生命周期
 ![](../maven/maven生命周期.png)
