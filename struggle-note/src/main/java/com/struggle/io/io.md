@@ -50,6 +50,9 @@ char在java中是2个字节。java采用16位unicode字符集，2个字节（16�
 字节（byte）是计算机中用来表示存储容量的一个计量单位，通常情况下，一个字节有 8 位（bit）。
 
 字节流用来处理二进制文件。
+
+_**IO结构如下图**_
+![](./img/IO.png)
 #### InputStream 类
 #### OutputStream 类
 
