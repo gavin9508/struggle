@@ -115,6 +115,9 @@ class Employee {
     int age;
     Double salary;
 
+    public Employee() {
+    }
+
     public Employee(String name, int age, Double salary) {
         this.name = name;
         this.age = age;

@@ -85,5 +85,5 @@ interface MyString {
 
 interface MyLong<T, R> {
 
-    Long getValue(R l1, R l2);
+    Long getValue(T l1, R l2);
 }
