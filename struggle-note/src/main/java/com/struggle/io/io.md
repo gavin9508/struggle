@@ -53,7 +53,7 @@ char在java中是2个字节。java采用16位unicode字符集，2个字节（16�
 
 _**IO结构如下图**_
 ![](./img/IO.png)
-使用方式查看- [IoTest](https://github.com/gavin9508/struggle/tree/master/struggle-note/src/main/java/com/struggle/io/test/iIoTest.java)
+使用方式查看- [IoTest](https://github.com/gavin9508/struggle/tree/master/struggle-note/src/main/java/com/struggle/io/test/IoTest.java)
 
 ### 字节流
 #### InputStream 类
