@@ -46,18 +46,25 @@ char在java中是2个字节。java采用16位unicode字符集，2个字节（16�
 
 
 ## IO流
-### 字符流与字节流
+### 字节流与字符流
 字节（byte）是计算机中用来表示存储容量的一个计量单位，通常情况下，一个字节有 8 位（bit）。
 
 字节流用来处理二进制文件。
 
 _**IO结构如下图**_
 ![](./img/IO.png)
-#### InputStream 类
-#### OutputStream 类
+使用方式查看- [IoTest](https://github.com/gavin9508/struggle/tree/master/struggle-note/src/main/java/com/struggle/io/test/iIoTest.java)
 
+### 字节流
+#### InputStream 类
+用于从源头（通常是文件）读取数据(字节信息)到内存中,是所有字节输入流的父类。
+#### OutputStream 类
+用于将数据(字节信息)写入到目的地（通常是文件）。
+### 字符流
 字符（char）可以是计算机中使用的字母、数字、和符号。
 
 字符流用来处理文本文件。
 #### Reader 类
+用于从源头（通常是文件）读取数据（字符信息）到内存中。
 #### Writer 类
+用于将数据（字符信息）写入到目的地（通常是文件）。
