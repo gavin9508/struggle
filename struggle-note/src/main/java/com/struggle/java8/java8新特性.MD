@@ -310,7 +310,7 @@ public class DishGroup {
 > 
 > 流是从支持数据处理操作的源生成的元素序列，源可以是数组、文件、集合、函数。流不是集合元素，它不是数据结构并不保存数据，它的主要目的在于计算
 
-如何生成流,生成流的方式主要有五种
+### 1.4.1 如何生成流,生成流的方式主要有五种
 
 > **1.通过集合生成，应用中最常用的一种**
 
@@ -349,12 +349,94 @@ Stream<Integer> stream = Stream.iterate(0, n -> n + 2).limit(5);
 ```
 iterate方法接受两个参数，第一个为初始化值，第二个为进行的函数操作，因为iterator生成的流为无限流，通过limit方法对流进行了截断，只生成5个偶数
 
-
 generate
 ```
 Stream<Double> stream = Stream.generate(Math::random).limit(5);
 ```
 generate方法接受一个参数，方法参数类型为Supplier，由它为流提供值。generate生成的流也是无限流，因此通过limit对流进行了截断
+
+### 1.4.2 流的操作类型
+流的操作类型主要分为两种
+
+> **1.中间操作**
+
+>一个流可以后面跟随零个或多个中间操作。其目的主要是打开流，做出某种程度的数据映射/过滤，然后返回一个新的流，交给下一个操作使用。这类操作都是惰性化的，仅仅调用到这类方法，并没有真正开始流的遍历，真正的遍历需等到终端操作时，常见的中间操作有下面即将介绍的filter、map等
+
+> **2.终端操作**
+
+>一个流有且只能有一个终端操作，当这个操作执行后，流就被关闭了，无法再被操作，因此一个流只能被遍历一次，若想在遍历需要通过源数据在生成流。终端操作的执行，才会真正开始流的遍历。如下面即将介绍的count、collect等
+
+### 1.4.3 中间操作
+**filter筛选**：通过使用filter方法进行条件筛选，filter的方法参数为一个条件
+```
+List<Integer> integerList = Arrays.asList(1, 1, 2, 3, 4, 5);
+Stream<Integer> stream = integerList.stream().filter(i -> i > 3);
+```
+**distinct去除重复元素**通：过distinct方法快速去除重复的元素
+```
+List<Integer> integerList = Arrays.asList(1, 1, 2, 3, 4, 5);
+Stream<Integer> stream = integerList.stream().distinct();
+```
+**limit返回指定流个数**：通过limit方法指定返回流的个数，limit的参数值必须>=0，否则将会抛出异常
+```
+List<Integer> integerList = Arrays.asList(1, 1, 2, 3, 4, 5);
+Stream<Integer> stream = integerList.stream().limit(3);
+```
+**skip跳过流中的元素**：通过skip方法跳过流中的元素，上述例子跳过前两个元素，所以打印结果为2,3,4,5，skip的参数值必须>=0，否则将会抛出异常
+```
+List<Integer> integerList = Arrays.asList(1, 1, 2, 3, 4, 5);
+Stream<Integer> stream = integerList.stream().skip(2);
+```
+**map流映射**：
+所谓流映射就是将接受的元素映射成另外一个元素，通过map方法可以完成映射，该例子完成中String -> Integer的映射，之前上面的例子通过map方法完成了Dish->String的映射
+```
+List<String> stringList = Arrays.asList("Java 8", "Lambdas",  "In", "Action");
+Stream<Integer> stream = stringList.stream().map(String::length);
+```
+**flatMap流转换**：将一个流中的每个值都转换为另一个流，map(w -> w.split(" "))的返回值为Stream<String[]>，我们想获取Stream<String>，可以通过flatMap方法完成Stream->Stream的转换
+```
+List<String> wordList = Arrays.asList("Hello", "World","Java 8 lambdas in action");
+List<String> strList = wordList.stream()       
+     .map(w -> w.split(" "))        
+     .flatMap(Arrays::stream)        
+     .distinct()        
+     .collect(Collectors.toList());
+```
+
+**元素匹配**：提供了三种匹配方式
+
+**1.allMatch匹配所有**：通过allMatch方法实现
+```
+List<Integer> integerList = Arrays.asList(1, 2, 3, 4, 5);
+if (integerList.stream().allMatch(i -> i > 3)) {    
+     System.out.println("值都大于3");
+}
+```
+**2.anyMatch匹配其中一个**：存在大于3的值则打印，java8中通过anyMatch方法实现这个功能
+```
+List<Integer> integerList = Arrays.asList(1, 2, 3, 4, 5);
+if (integerList.stream().anyMatch(i -> i > 3)) {    
+     System.out.println("存在大于3的值");
+}
+```
+
+等同于
+```
+for (Integer i : integerList) {   
+     if (i > 3) {        
+          System.out.println("存在大于3的值");        
+          break;    
+     }
+}
+```
+
+**3.noneMatch全部不匹配**：通过noneMatch方法实现
+```
+List<Integer> integerList = Arrays.asList(1, 2, 3, 4, 5);
+if (integerList.stream().noneMatch(i -> i > 3)) {    
+     System.out.println("值都小于3");
+}
+```
 
 ## 1.5 接口中的默认方法与静态方法
 
