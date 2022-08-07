@@ -3,10 +3,7 @@
 > 使用 explain 查询和分析SQl的执行记录，可以进行sql的性能优化
 
 ```sql
-mysql
-> explain
-select *
-from students;
+mysql> explain select * from students;
 +----+-------------+----------+------+---------------+------+---------+------+------+-------+
 | id | select_type | table    | type | possible_keys | key  | key_len | ref  | rows | Extra |
 +----+-------------+----------+------+---------------+------+---------+------+------+-------+
@@ -14,22 +11,13 @@ from students;
 +----+-------------+----------+------+---------------+------+---------+------+------+-------+
 1 row in set
 
-mysql> explain extended
-select *
-from students;
+mysql> explain extended select * from students;
 +----+-------------+----------+------+---------------+------+---------+------+------+----------+-------+
 | id | select_type | table    | type | possible_keys | key  | key_len | ref  | rows | filtered | Extra |
 +----+-------------+----------+------+---------------+------+---------+------+------+----------+-------+
 |  1 | SIMPLE      | students | ALL  | NULL          | NULL | NULL    | NULL |    3 |      100 |       |
 +----+-------------+----------+------+---------------+------+---------+------+------+----------+-------+
 1 row in set
-
--- mysql8的explain默认加extended，手动再加会报错
-explain
-select * from sys_user;
-show warnings;
-
--- 一块执行，结果1显示执行计划结果，结果2显示MySQL优化器优化后的查询语句
 ```
 
 > MySQL执行计划调用方式
@@ -43,10 +31,12 @@ show warnings;
 >将执行计划"反编译"成SELECT语句，运行SHOW WARNINGS
 >
 >可得到被MySQL优化器优化后的查询语句
->
->3.EXPLAIN PARTITIONS SELECT ……
->
->用于分区表的EXPLAIN生成QEP的信息>
+```sql
+-- mysql8的explain默认加extended，手动再加会报错
+explain select * from sys_user;
+show warnings;
+-- 以上一块执行，结果1显示执行计划结果，结果2显示MySQL优化器优化后的查询语句
+```
 
 ### id
 
