@@ -437,6 +437,150 @@ if (integerList.stream().noneMatch(i -> i > 3)) {
      System.out.println("值都小于3");
 }
 ```
+### 1.4.4 终端操作
+**统计流中元素个数**
+
+**1. 通过count**：通过使用count方法统计出流中元素个数
+```
+List<Integer> integerList = Arrays.asList(1, 2, 3, 4, 5);
+Long result = integerList.stream().count();
+```
+**2. 通过counting**：最后一种统计元素个数的方法在与collect联合使用的时候特别有用
+```
+List<Integer> integerList = Arrays.asList(1, 2, 3, 4, 5);
+Long result = integerList.stream().collect(counting());
+```
+**查找**：提供了两种查找方式
+**1.findFirst查找第一个**：通过findFirst方法查找到第一个大于三的元素并打印
+```
+List<Integer> integerList = Arrays.asList(1, 2, 3, 4, 5);
+Optional<Integer> result = integerList.stream().filter(i -> i > 3).findFirst();
+```
+**2.findAny随机查找一个**：通过findAny方法查找到其中一个大于三的元素并打印，因为内部进行优化的原因，当找到第一个满足大于三的元素时就结束，该方法结果和findFirst方法结果一样。提供findAny方法是为了更好的利用并行流，findFirst方法在并行上限制更多
+```
+List<Integer> integerList = Arrays.asList(1, 2, 3, 4, 5);
+Optional<Integer> result = integerList.stream().filter(i -> i > 3).findAny();
+```
+**reduce将流中的元素组合起来**：假设我们对一个集合中的值进行求和
+jdk8之前
+```
+int sum = 0;for (int i : integerList) {sum += i;}
+```
+jdk8之后通过reduce进行处理
+```
+int sum = integerList.stream().reduce(0, (a, b) -> (a + b));
+```
+一行就可以完成，还可以使用方法引用简写成：
+```
+int sum = integerList.stream().reduce(0, Integer::sum);
+```
+reduce接受两个参数，一个初始值这里是0，一个BinaryOperator<T> accumulator来将两个元素结合起来产生一个新值，另外reduce方法还有一个没有初始化值的重载方法
+
+**获取流中最小最大值**：通过min/max获取最小最大值，min获取流中最小值，max获取流中最大值，方法参数为Comparator<? super T> comparator
+```
+Optional<Integer> min = menu.stream().map(Dish::getCalories).min(Integer::compareTo);
+Optional<Integer> max = menu.stream().map(Dish::getCalories).max(Integer::compareTo);
+```
+也可以写成：
+```
+OptionalInt min = menu.stream().mapToInt(Dish::getCalories).min();
+OptionalInt max = menu.stream().mapToInt(Dish::getCalories).max();
+```
+**通过minBy/maxBy获取最小最大值**：minBy获取流中最小值，maxBy获取流中最大值，方法参数为Comparator<? super T> comparator
+```
+Optional<Integer> min = menu.stream().map(Dish::getCalories).collect(minBy(Integer::compareTo));
+Optional<Integer> max = menu.stream().map(Dish::getCalories).collect(maxBy(Integer::compareTo));
+```
+
+**通过reduce获取最小最大值**
+```
+Optional<Integer> min = menu.stream().map(Dish::getCalories).reduce(Integer::min);
+Optional<Integer> max = menu.stream().map(Dish::getCalories).reduce(Integer::max);
+```
+
+**求和**：通过summingInt，如果数据类型为double、long，则通过summingDouble、summingLong方法进行求和
+```
+int sum = menu.stream().collect(summingInt(Dish::getCalories));
+```
+**通过reduce**：通过sum，在上面求和、求最大值、最小值的时候，对于相同操作有不同的方法可以选择执行。可以选择collect、reduce、min/max/sum方法，推荐使用min、max、sum方法。因为它最简洁易读，同时通过mapToInt将对象流转换为数值流，避免了装箱和拆箱操作
+```
+int sum = menu.stream().map(Dish::getCalories).reduce(0, Integer::sum);
+
+int sum = menu.stream().mapToInt(Dish::getCalories).sum();
+```
+
+**通过averagingInt求平均值**：如果数据类型为double、long，则通过averagingDouble、averagingLong方法进行求平均
+```
+double average = menu.stream().collect(averagingInt(Dish::getCalories));
+```
+**通过summarizingInt同时求总和、平均值、最大值、最小值**：如果数据类型为double、long，则通过summarizingDouble、summarizingLong方法
+```
+IntSummaryStatistics intSummaryStatistics = menu.stream().collect(summarizingInt(Dish::getCalories));
+//获取平均值
+double average = intSummaryStatistics.getAverage();  
+//获取最小值
+int min = intSummaryStatistics.getMin();  
+//获取最大值
+int max = intSummaryStatistics.getMax();
+//获取总和
+long sum = intSummaryStatistics.getSum();
+```
+**通过foreach进行元素遍历**：jdk8之后遍历元素来的更为方便，原来的for-each直接通过foreach方法就能实现了
+```
+List<Integer> integerList = Arrays.asList(1, 2, 3, 4, 5);
+integerList.stream().forEach(System.out::println);
+```
+而在jdk8之前实现遍历：
+```
+for (int i : integerList) {    
+     System.out.println(i);
+}
+```
+**返回集合**：通过遍历和返回集合的使用发现流只是把原来的外部迭代放到了内部进行，这也是流的主要特点之一。内部迭代可以减少好多代码量
+```
+List<String> strings = menu.stream().map(Dish::getName).collect(toList());
+Set<String> sets = menu.stream().map(Dish::getName).collect(toSet());
+```
+只举例了一部分，还有很多其他方法 jdk8之前
+```
+List<String> stringList = new ArrayList<>();    
+Set<String> stringSet = new HashSet<>();    
+for (Dish dish : menu) {        
+     stringList.add(dish.getName());        
+     stringSet.add(dish.getName());
+}
+```
+**通过joining拼接流中的元素**：默认如果不通过map方法进行映射处理拼接的toString方法返回的字符串，joining的方法参数为元素的分界符，如果不指定生成的字符串将是一串的，可读性不强
+```
+String result = menu.stream().map(Dish::getName).collect(Collectors.joining(", "));
+```
+**进阶通过groupingBy进行分组**：在collect方法中传入groupingBy进行分组，其中groupingBy的方法参数为分类函数。还可以通过嵌套使用groupingBy进行多级分类
+```
+Map<Type, List<Dish>> result = dishList.stream().collect(groupingBy(Dish::getType));
+Map<Type, List<Dish>> result = menu.stream().collect(groupingBy(Dish::getType,        
+groupingBy(dish -> {            
+     if (dish.getCalories() <= 400)
+          return CaloricLevel.DIET;                
+     else if (dish.getCalories() <= 700)
+          return CaloricLevel.NORMAL;                
+     else
+          return CaloricLevel.FAT;        
+     })));
+```
+**进阶通过partitioningBy进行分区**：分区是特殊的分组，它分类依据是true和false，所以返回的结果最多可以分为两组
+```
+Map<Boolean, List<Dish>> result = menu.stream().collect(partitioningBy(Dish :: isVegetarian))
+```
+等同于
+```
+Map<Boolean, List<Dish>> result = menu.stream().collect(groupingBy(Dish :: isVegetarian))
+```
+这个例子可能并不能看出分区和分类的区别，甚至觉得分区根本没有必要，换个明显一点的例子：
+```
+List<Integer> integerList = Arrays.asList(1, 2, 3, 4, 5);
+Map<Boolean, List<Integer>> result = integerList.stream().collect(partitioningBy(i -> i < 3));
+```
+返回值的键仍然是布尔类型，但是它的分类是根据范围进行分类的，分区比较适合处理根据范围进行分类
 
 ## 1.5 接口中的默认方法与静态方法
 
