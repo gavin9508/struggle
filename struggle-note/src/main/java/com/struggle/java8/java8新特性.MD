@@ -218,96 +218,99 @@ public class Dish {
 
 ```java
 public class DishFilter {
-     static List<Dish> dishes = Arrays.asList(
-             new Dish("糖醋里脊", false, 9090, new Type("川菜")),
-             new Dish("麻婆豆腐", true, 380, new Type("川菜")),
-             new Dish("辣子鸡", false, 5700, new Type("川菜")),
-             new Dish("剁椒鱼", false, 567, new Type("湘菜")),
-             new Dish("糖油粑粑", false, 245, new Type("湘菜"))
-     );
+    static List<Dish> dishes = Arrays.asList(
+            new Dish("糖醋里脊", false, 9090, new Type("川菜")),
+            new Dish("麻婆豆腐", true, 380, new Type("川菜")),
+            new Dish("辣子鸡", false, 5700, new Type("川菜")),
+            new Dish("剁椒鱼", false, 567, new Type("湘菜")),
+            new Dish("糖油粑粑", false, 245, new Type("湘菜"))
+    );
 
-     public static void main(String[] args) {
-          List<String> dishFilers = beforeJava7(dishes);
-          dishFilers.forEach(System.out::println);
-          System.out.println("=========");
-          dishFilers = afterJava8(dishes);
-          dishFilers.forEach(System.out::println);
-     }
+    public static void main(String[] args) {
+        List<String> dishFilers = beforeJava7(dishes);
+        dishFilers.forEach(System.out::println);
+        System.out.println("=========");
+        dishFilers = afterJava8(dishes);
+        dishFilers.forEach(System.out::println);
+    }
 
-     private static List<String> afterJava8(List<Dish> dishList) {
-          return dishList.stream()
-                  .filter(dish -> dish.getCalories() < 1000)
-                  .sorted(Comparator.comparing(Dish::getCalories))
-                  .map(Dish::getName)
-                  .collect(Collectors.toList());
-     }
+    private static List<String> afterJava8(List<Dish> dishList) {
+        return dishList.stream()
+                .filter(dish -> dish.getCalories() < 1000)
+                .sorted(Comparator.comparing(Dish::getCalories))
+                .map(Dish::getName)
+                .collect(Collectors.toList());
+    }
 
-     private static List<String> beforeJava7(List<Dish> dishList) {
-          List<Dish> lowCaloricDishes = new ArrayList<>();
-          //1.筛选出卡路里小于400的菜肴
-          for (Dish dish : dishList) {
-               if (dish.getCalories() < 400) {
-                    lowCaloricDishes.add(dish);
-               }
-          }
-          //2.对筛选出的菜肴进行排序
-          Collections.sort(lowCaloricDishes, new Comparator<Dish>() {
-               @Override
-               public int compare(Dish o1, Dish o2) {
-                    return Integer.compare(o1.getCalories(), o2.getCalories());
-               }
-          });
-          //3.获取排序后菜肴的名字
-          List<String> lowCaloricDishesName = new ArrayList<>();
-          for (Dish d : lowCaloricDishes) {
-               lowCaloricDishesName.add(d.getName());
-          }
-          return lowCaloricDishesName;
-     }
+    private static List<String> beforeJava7(List<Dish> dishList) {
+        List<Dish> lowCaloricDishes = new ArrayList<>();
+        //1.筛选出卡路里小于400的菜肴
+        for (Dish dish : dishList) {
+            if (dish.getCalories() < 400) {
+                lowCaloricDishes.add(dish);
+            }
+        }
+        //2.对筛选出的菜肴进行排序
+        Collections.sort(lowCaloricDishes, new Comparator<Dish>() {
+            @Override
+            public int compare(Dish o1, Dish o2) {
+                return Integer.compare(o1.getCalories(), o2.getCalories());
+            }
+        });
+        //3.获取排序后菜肴的名字
+        List<String> lowCaloricDishesName = new ArrayList<>();
+        for (Dish d : lowCaloricDishes) {
+            lowCaloricDishesName.add(d.getName());
+        }
+        return lowCaloricDishesName;
+    }
 }
 ```
+
 对数据库查询到的菜肴根据菜肴种类进行分类
+
 ```java
 public class DishGroup {
-     static List<Dish> dishes = Arrays.asList(
-             new Dish("糖醋里脊", false, 9090, new Type("川菜")),
-             new Dish("麻婆豆腐", true, 380, new Type("川菜")),
-             new Dish("辣子鸡", false, 5700, new Type("川菜")),
-             new Dish("剁椒鱼", false, 567, new Type("湘菜")),
-             new Dish("糖油粑粑", false, 245, new Type("湘菜"))
-     );
+    static List<Dish> dishes = Arrays.asList(
+            new Dish("糖醋里脊", false, 9090, new Type("川菜")),
+            new Dish("麻婆豆腐", true, 380, new Type("川菜")),
+            new Dish("辣子鸡", false, 5700, new Type("川菜")),
+            new Dish("剁椒鱼", false, 567, new Type("湘菜")),
+            new Dish("糖油粑粑", false, 245, new Type("湘菜"))
+    );
 
-     public static void main(String[] args) {
-          Map<Type, List<Dish>> typeListMap = beforeJdk8(dishes);
-          Optional.of(typeListMap).ifPresent(System.out::println);
-          System.out.println("===========");
-          typeListMap = afterJdk8(dishes);
-          Optional.of(typeListMap).ifPresent(System.out::println);
-     }
-     private static Map<Type, List<Dish>> beforeJdk8(List<Dish> dishList) {
-          Map<Type, List<Dish>> result = new HashMap<>();
-          for (Dish dish : dishList) {
-               //不存在则初始化
-               if (result.get(dish.getType())==null) {
-                    List<Dish> dishes = new ArrayList<>();
-                    dishes.add(dish);
-                    result.put(dish.getType(), dishes);
-               } else {
-                    //存在则追加
-                    result.get(dish.getType()).add(dish);
-               }
-          }
-          return result;
-     }
+    public static void main(String[] args) {
+        Map<Type, List<Dish>> typeListMap = beforeJdk8(dishes);
+        Optional.of(typeListMap).ifPresent(System.out::println);
+        System.out.println("===========");
+        typeListMap = afterJdk8(dishes);
+        Optional.of(typeListMap).ifPresent(System.out::println);
+    }
 
-     private static Map<Type, List<Dish>> afterJdk8(List<Dish> dishList) {
-          return dishList.stream().collect(groupingBy(Dish::getType));
-     }
+    private static Map<Type, List<Dish>> beforeJdk8(List<Dish> dishList) {
+        Map<Type, List<Dish>> result = new HashMap<>();
+        for (Dish dish : dishList) {
+            //不存在则初始化
+            if (result.get(dish.getType()) == null) {
+                List<Dish> dishes = new ArrayList<>();
+                dishes.add(dish);
+                result.put(dish.getType(), dishes);
+            } else {
+                //存在则追加
+                result.get(dish.getType()).add(dish);
+            }
+        }
+        return result;
+    }
+
+    private static Map<Type, List<Dish>> afterJdk8(List<Dish> dishList) {
+        return dishList.stream().collect(groupingBy(Dish::getType));
+    }
 }
 ```
 
 > **什么是流**
-> 
+>
 > 流是从支持数据处理操作的源生成的元素序列，源可以是数组、文件、集合、函数。流不是集合元素，它不是数据结构并不保存数据，它的主要目的在于计算
 
 ### 1.4.1 如何生成流,生成流的方式主要有五种
@@ -320,6 +323,7 @@ Stream<Integer> stream = integerList.stream();
 ```
 
 > **2.通过数组生成**
+
 ```
 int[] intArr = new int[]{1, 2, 3, 4, 5};
 IntStream stream = Arrays.stream(intArr);
@@ -329,71 +333,94 @@ IntStream stream = Arrays.stream(intArr);
 
 Stream API提供了mapToInt、mapToDouble、mapToLong三种方式将对象流【即Stream转换成对应的数值流，同时提供了boxed方法将数值流转换为对象流
 
->**3.通过值生成**
+> **3.通过值生成**
+
 ```
 Stream<Integer> stream = Stream.of(1, 2, 3, 4, 5);
 ```
+
 通过Stream的of方法生成流，通过Stream的empty方法可以生成一个空流
 
->**4.通过文件生成**
+> **4.通过文件生成**
+
 ```
 Stream<String> lines = Files.lines(Paths.get("data.txt"), Charset.defaultCharset())
 ```
+
 通过Files.line方法得到一个流，并且得到的每个流是给定文件中的一行
 
->**5.通过函数生成** 提供了iterate和generate两个静态方法从函数中生成流
+> **5.通过函数生成** 提供了iterate和generate两个静态方法从函数中生成流
 
- iterator
+iterator
+
 ```
 Stream<Integer> stream = Stream.iterate(0, n -> n + 2).limit(5);
 ```
+
 iterate方法接受两个参数，第一个为初始化值，第二个为进行的函数操作，因为iterator生成的流为无限流，通过limit方法对流进行了截断，只生成5个偶数
 
 generate
+
 ```
 Stream<Double> stream = Stream.generate(Math::random).limit(5);
 ```
+
 generate方法接受一个参数，方法参数类型为Supplier，由它为流提供值。generate生成的流也是无限流，因此通过limit对流进行了截断
 
 ### 1.4.2 流的操作类型
+
 流的操作类型主要分为两种
 
 > **1.中间操作**
 
->一个流可以后面跟随零个或多个中间操作。其目的主要是打开流，做出某种程度的数据映射/过滤，然后返回一个新的流，交给下一个操作使用。这类操作都是惰性化的，仅仅调用到这类方法，并没有真正开始流的遍历，真正的遍历需等到终端操作时，常见的中间操作有下面即将介绍的filter、map等
+>
+一个流可以后面跟随零个或多个中间操作。其目的主要是打开流，做出某种程度的数据映射/过滤，然后返回一个新的流，交给下一个操作使用。这类操作都是惰性化的，仅仅调用到这类方法，并没有真正开始流的遍历，真正的遍历需等到终端操作时，常见的中间操作有下面即将介绍的filter、map等
 
 > **2.终端操作**
 
->一个流有且只能有一个终端操作，当这个操作执行后，流就被关闭了，无法再被操作，因此一个流只能被遍历一次，若想在遍历需要通过源数据在生成流。终端操作的执行，才会真正开始流的遍历。如下面即将介绍的count、collect等
+> 一个流有且只能有一个终端操作，当这个操作执行后，流就被关闭了，无法再被操作，因此一个流只能被遍历一次，若想在遍历需要通过源数据在生成流。终端操作的执行，才会真正开始流的遍历。如下面即将介绍的count、collect等
 
 ### 1.4.3 中间操作
+
 **filter筛选**：通过使用filter方法进行条件筛选，filter的方法参数为一个条件
+
 ```
 List<Integer> integerList = Arrays.asList(1, 1, 2, 3, 4, 5);
 Stream<Integer> stream = integerList.stream().filter(i -> i > 3);
 ```
+
 **distinct去除重复元素**通：过distinct方法快速去除重复的元素
+
 ```
 List<Integer> integerList = Arrays.asList(1, 1, 2, 3, 4, 5);
 Stream<Integer> stream = integerList.stream().distinct();
 ```
+
 **limit返回指定流个数**：通过limit方法指定返回流的个数，limit的参数值必须>=0，否则将会抛出异常
+
 ```
 List<Integer> integerList = Arrays.asList(1, 1, 2, 3, 4, 5);
 Stream<Integer> stream = integerList.stream().limit(3);
 ```
+
 **skip跳过流中的元素**：通过skip方法跳过流中的元素，上述例子跳过前两个元素，所以打印结果为2,3,4,5，skip的参数值必须>=0，否则将会抛出异常
+
 ```
 List<Integer> integerList = Arrays.asList(1, 1, 2, 3, 4, 5);
 Stream<Integer> stream = integerList.stream().skip(2);
 ```
+
 **map流映射**：
 所谓流映射就是将接受的元素映射成另外一个元素，通过map方法可以完成映射，该例子完成中String -> Integer的映射，之前上面的例子通过map方法完成了Dish->String的映射
+
 ```
 List<String> stringList = Arrays.asList("Java 8", "Lambdas",  "In", "Action");
 Stream<Integer> stream = stringList.stream().map(String::length);
 ```
-**flatMap流转换**：将一个流中的每个值都转换为另一个流，map(w -> w.split(" "))的返回值为Stream<String[]>，我们想获取Stream<String>，可以通过flatMap方法完成Stream->Stream的转换
+
+**flatMap流转换**：将一个流中的每个值都转换为另一个流，map(w -> w.split(" "))的返回值为Stream<String[]>，我们想获取Stream<String>，可以通过flatMap方法完成Stream->
+Stream的转换
+
 ```
 List<String> wordList = Arrays.asList("Hello", "World","Java 8 lambdas in action");
 List<String> strList = wordList.stream()       
@@ -406,13 +433,16 @@ List<String> strList = wordList.stream()
 **元素匹配**：提供了三种匹配方式
 
 **1.allMatch匹配所有**：通过allMatch方法实现
+
 ```
 List<Integer> integerList = Arrays.asList(1, 2, 3, 4, 5);
 if (integerList.stream().allMatch(i -> i > 3)) {    
      System.out.println("值都大于3");
 }
 ```
+
 **2.anyMatch匹配其中一个**：存在大于3的值则打印，java8中通过anyMatch方法实现这个功能
+
 ```
 List<Integer> integerList = Arrays.asList(1, 2, 3, 4, 5);
 if (integerList.stream().anyMatch(i -> i > 3)) {    
@@ -421,6 +451,7 @@ if (integerList.stream().anyMatch(i -> i > 3)) {
 ```
 
 等同于
+
 ```
 for (Integer i : integerList) {   
      if (i > 3) {        
@@ -431,78 +462,106 @@ for (Integer i : integerList) {
 ```
 
 **3.noneMatch全部不匹配**：通过noneMatch方法实现
+
 ```
 List<Integer> integerList = Arrays.asList(1, 2, 3, 4, 5);
 if (integerList.stream().noneMatch(i -> i > 3)) {    
      System.out.println("值都小于3");
 }
 ```
+
 ### 1.4.4 终端操作
+
 **统计流中元素个数**
 
 **1. 通过count**：通过使用count方法统计出流中元素个数
+
 ```
 List<Integer> integerList = Arrays.asList(1, 2, 3, 4, 5);
 Long result = integerList.stream().count();
 ```
+
 **2. 通过counting**：最后一种统计元素个数的方法在与collect联合使用的时候特别有用
+
 ```
 List<Integer> integerList = Arrays.asList(1, 2, 3, 4, 5);
 Long result = integerList.stream().collect(counting());
 ```
+
 **查找**：提供了两种查找方式
 **1.findFirst查找第一个**：通过findFirst方法查找到第一个大于三的元素并打印
+
 ```
 List<Integer> integerList = Arrays.asList(1, 2, 3, 4, 5);
 Optional<Integer> result = integerList.stream().filter(i -> i > 3).findFirst();
 ```
-**2.findAny随机查找一个**：通过findAny方法查找到其中一个大于三的元素并打印，因为内部进行优化的原因，当找到第一个满足大于三的元素时就结束，该方法结果和findFirst方法结果一样。提供findAny方法是为了更好的利用并行流，findFirst方法在并行上限制更多
+
+**2.findAny随机查找一个**
+：通过findAny方法查找到其中一个大于三的元素并打印，因为内部进行优化的原因，当找到第一个满足大于三的元素时就结束，该方法结果和findFirst方法结果一样。提供findAny方法是为了更好的利用并行流，findFirst方法在并行上限制更多
+
 ```
 List<Integer> integerList = Arrays.asList(1, 2, 3, 4, 5);
 Optional<Integer> result = integerList.stream().filter(i -> i > 3).findAny();
 ```
+
 **reduce将流中的元素组合起来**：假设我们对一个集合中的值进行求和
 jdk8之前
+
 ```
 int sum = 0;for (int i : integerList) {sum += i;}
 ```
+
 jdk8之后通过reduce进行处理
+
 ```
 int sum = integerList.stream().reduce(0, (a, b) -> (a + b));
 ```
+
 一行就可以完成，还可以使用方法引用简写成：
+
 ```
 int sum = integerList.stream().reduce(0, Integer::sum);
 ```
+
 reduce接受两个参数，一个初始值这里是0，一个BinaryOperator<T> accumulator来将两个元素结合起来产生一个新值，另外reduce方法还有一个没有初始化值的重载方法
 
 **获取流中最小最大值**：通过min/max获取最小最大值，min获取流中最小值，max获取流中最大值，方法参数为Comparator<? super T> comparator
+
 ```
 Optional<Integer> min = menu.stream().map(Dish::getCalories).min(Integer::compareTo);
 Optional<Integer> max = menu.stream().map(Dish::getCalories).max(Integer::compareTo);
 ```
+
 也可以写成：
+
 ```
 OptionalInt min = menu.stream().mapToInt(Dish::getCalories).min();
 OptionalInt max = menu.stream().mapToInt(Dish::getCalories).max();
 ```
+
 **通过minBy/maxBy获取最小最大值**：minBy获取流中最小值，maxBy获取流中最大值，方法参数为Comparator<? super T> comparator
+
 ```
 Optional<Integer> min = menu.stream().map(Dish::getCalories).collect(minBy(Integer::compareTo));
 Optional<Integer> max = menu.stream().map(Dish::getCalories).collect(maxBy(Integer::compareTo));
 ```
 
 **通过reduce获取最小最大值**
+
 ```
 Optional<Integer> min = menu.stream().map(Dish::getCalories).reduce(Integer::min);
 Optional<Integer> max = menu.stream().map(Dish::getCalories).reduce(Integer::max);
 ```
 
 **求和**：通过summingInt，如果数据类型为double、long，则通过summingDouble、summingLong方法进行求和
+
 ```
 int sum = menu.stream().collect(summingInt(Dish::getCalories));
 ```
-**通过reduce**：通过sum，在上面求和、求最大值、最小值的时候，对于相同操作有不同的方法可以选择执行。可以选择collect、reduce、min/max/sum方法，推荐使用min、max、sum方法。因为它最简洁易读，同时通过mapToInt将对象流转换为数值流，避免了装箱和拆箱操作
+
+**通过reduce**
+：通过sum，在上面求和、求最大值、最小值的时候，对于相同操作有不同的方法可以选择执行。可以选择collect、reduce、min/max/sum方法，推荐使用min、max、sum方法。因为它最简洁易读，同时通过mapToInt将对象流转换为数值流，避免了装箱和拆箱操作
+
 ```
 int sum = menu.stream().map(Dish::getCalories).reduce(0, Integer::sum);
 
@@ -510,10 +569,13 @@ int sum = menu.stream().mapToInt(Dish::getCalories).sum();
 ```
 
 **通过averagingInt求平均值**：如果数据类型为double、long，则通过averagingDouble、averagingLong方法进行求平均
+
 ```
 double average = menu.stream().collect(averagingInt(Dish::getCalories));
 ```
+
 **通过summarizingInt同时求总和、平均值、最大值、最小值**：如果数据类型为double、long，则通过summarizingDouble、summarizingLong方法
+
 ```
 IntSummaryStatistics intSummaryStatistics = menu.stream().collect(summarizingInt(Dish::getCalories));
 //获取平均值
@@ -525,23 +587,31 @@ int max = intSummaryStatistics.getMax();
 //获取总和
 long sum = intSummaryStatistics.getSum();
 ```
+
 **通过foreach进行元素遍历**：jdk8之后遍历元素来的更为方便，原来的for-each直接通过foreach方法就能实现了
+
 ```
 List<Integer> integerList = Arrays.asList(1, 2, 3, 4, 5);
 integerList.stream().forEach(System.out::println);
 ```
+
 而在jdk8之前实现遍历：
+
 ```
 for (int i : integerList) {    
      System.out.println(i);
 }
 ```
+
 **返回集合**：通过遍历和返回集合的使用发现流只是把原来的外部迭代放到了内部进行，这也是流的主要特点之一。内部迭代可以减少好多代码量
+
 ```
 List<String> strings = menu.stream().map(Dish::getName).collect(toList());
 Set<String> sets = menu.stream().map(Dish::getName).collect(toSet());
 ```
+
 只举例了一部分，还有很多其他方法 jdk8之前
+
 ```
 List<String> stringList = new ArrayList<>();    
 Set<String> stringSet = new HashSet<>();    
@@ -550,11 +620,15 @@ for (Dish dish : menu) {
      stringSet.add(dish.getName());
 }
 ```
+
 **通过joining拼接流中的元素**：默认如果不通过map方法进行映射处理拼接的toString方法返回的字符串，joining的方法参数为元素的分界符，如果不指定生成的字符串将是一串的，可读性不强
+
 ```
 String result = menu.stream().map(Dish::getName).collect(Collectors.joining(", "));
 ```
+
 **进阶通过groupingBy进行分组**：在collect方法中传入groupingBy进行分组，其中groupingBy的方法参数为分类函数。还可以通过嵌套使用groupingBy进行多级分类
+
 ```
 Map<Type, List<Dish>> result = dishList.stream().collect(groupingBy(Dish::getType));
 Map<Type, List<Dish>> result = menu.stream().collect(groupingBy(Dish::getType,        
@@ -567,23 +641,153 @@ groupingBy(dish -> {
           return CaloricLevel.FAT;        
      })));
 ```
+
 **进阶通过partitioningBy进行分区**：分区是特殊的分组，它分类依据是true和false，所以返回的结果最多可以分为两组
+
 ```
 Map<Boolean, List<Dish>> result = menu.stream().collect(partitioningBy(Dish :: isVegetarian))
 ```
+
 等同于
+
 ```
 Map<Boolean, List<Dish>> result = menu.stream().collect(groupingBy(Dish :: isVegetarian))
 ```
+
 这个例子可能并不能看出分区和分类的区别，甚至觉得分区根本没有必要，换个明显一点的例子：
+
 ```
 List<Integer> integerList = Arrays.asList(1, 2, 3, 4, 5);
 Map<Boolean, List<Integer>> result = integerList.stream().collect(partitioningBy(i -> i < 3));
 ```
+
 返回值的键仍然是布尔类型，但是它的分类是根据范围进行分类的，分区比较适合处理根据范围进行分类
 
 ## 1.5 接口中的默认方法与静态方法
 
-## 1.6 新实践日期API
+接口中的默认方法：
+
+接口默认方法的“类优先”原则
+若一个接口中定义了一个默认方法，而另外一个父类或接口中又定义了一个同名的方法时
+
+> 1. 选择父类中的方法。如果一个父类提供了具体的实现，那么接口中具有相同名称和参数的默认方法会被忽略。
+> 2. 接口冲突。如果一个父接口提供方一个默认方法，而另一个接口也提供了一个具有相同名称和参数列表的方法（不管方法是否是默认方法），那么必须覆盖该方法来解决冲突。
+
+## 1.6 日期API
+
+```java
+package com.java8.date;
+
+import org.junit.Test;
+
+import java.time.*;
+import java.util.Date;
+
+public class TestLocalDateTime {
+    // LocalDate、LocalTime、LocalDateTime
+    @Test
+    public void test1() {
+        Date date = new Date();
+        System.out.println(date);
+
+        LocalDateTime ldt = LocalDateTime.now();
+        System.out.println(ldt);
+        LocalDateTime localDateTime = LocalDateTime.of(2015, 03, 10, 13, 04, 34);
+        System.out.println(localDateTime);
+        System.out.println(localDateTime.plusDays(2));
+        System.out.println(localDateTime.getYear());
+    }
+
+    // Instant：时间戳(以Unix元年：1970年1月1日 00:00:00到某个之间的毫秒值)
+    @Test
+    public void test2() {
+        Instant ins = Instant.now();
+        System.out.println(ins);
+        OffsetDateTime odt = ins.atOffset(ZoneOffset.ofHours(8));
+        System.out.println(odt);
+        System.out.println(ins.toEpochMilli());
+        Instant instant = Instant.ofEpochSecond(1);
+        System.out.println(instant);
+    }
+
+    // Duration：计算两个"时间"之间的间隔
+    // Period：计算两个"日期"之间的间隔
+    @Test
+    public void test3() {
+        Instant ins = Instant.now();
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        Instant ins2 = Instant.now();
+        Duration duration = Duration.between(ins, ins2);
+        System.out.println(duration);
+        System.out.println(duration.getSeconds());
+        System.out.println(duration.toMillis());
+        System.out.println("--------");
+
+        LocalTime lt = LocalTime.now();
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        LocalTime lt2 = LocalTime.now();
+        Duration duration2 = Duration.between(lt, lt2);
+        System.out.println(duration2);
+    }
+
+    // 时间校正器
+    @Test
+    public void test4() {
+        LocalDateTime ldt = LocalDateTime.now();
+        System.out.println(ldt);
+
+        LocalDateTime ldt1 = ldt.withDayOfMonth(10);
+        System.out.println(ldt1);
+
+        LocalDateTime ldt2 = ldt.with(TemporalAdjusters.next(DayOfWeek.FRIDAY));
+        System.out.println(ldt2);
+
+        // 自定义：下一个工作日
+        LocalDateTime ldt5 = ldt.with((l) -> {
+            LocalDateTime ldt4 = (LocalDateTime) l;
+            DayOfWeek dow = ldt4.getDayOfWeek();
+            if (dow.equals(DayOfWeek.FRIDAY)) {
+                return ldt4.plusDays(3);
+            } else if (dow.equals(DayOfWeek.SATURDAY)) {
+                return ldt4.plusDays(2);
+            } else {
+                return ldt4.plusDays(1);
+            }
+        });
+        System.out.println(ldt5);
+    }
+
+    // DateTimeFormatter: 格式化时间/日期
+    @Test
+    public void test5() {
+        DateTimeFormatter dtf = DateTimeFormatter.ISO_DATE_TIME;
+        DateTimeFormatter dtf1 = DateTimeFormatter.ISO_DATE;
+        LocalDateTime ldt = LocalDateTime.now();
+        String format = ldt.format(dtf);
+        System.out.println(format);
+        String format1 = ldt.format(dtf1);
+        System.out.println(format1);
+
+        System.out.println("-----------");
+
+        DateTimeFormatter dtf2 = DateTimeFormatter.ofPattern("yyyy年MM月dd日");
+        String strDate = dtf2.format(ldt);
+        System.out.println(strDate);
+        System.out.println("-------");
+//        LocalDateTime newDate = ldt.parse(strDate, dtf2);
+//        System.out.println(newDate);
+    }
+
+}
+
+```
 
 ## 1.7 其他新特性
