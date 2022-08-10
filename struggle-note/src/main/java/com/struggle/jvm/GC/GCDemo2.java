@@ -1,4 +1,4 @@
-package com.struggle.object.GC;
+package com.struggle.jvm.GC;
 
 import java.util.ArrayList;
 import java.util.List;

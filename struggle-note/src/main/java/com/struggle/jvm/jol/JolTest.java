@@ -1,4 +1,4 @@
-package com.struggle.object.jol;
+package com.struggle.jvm.jol;
 
 import org.openjdk.jol.info.ClassLayout;
 

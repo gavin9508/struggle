@@ -1,4 +1,4 @@
-package com.struggle.object.unlock;
+package com.struggle.jvm.unlock;
 
 import org.openjdk.jol.info.ClassLayout;
 

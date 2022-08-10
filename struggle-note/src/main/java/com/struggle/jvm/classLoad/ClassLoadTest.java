@@ -1,4 +1,4 @@
-package com.struggle.object.classLoad;
+package com.struggle.jvm.classLoad;
 
 /**
  * @Author gavin
@@ -9,10 +9,10 @@ public class ClassLoadTest {
 
     public static void main(String[] args) {
         ClassLoader classLoader = ClassLoadTest.class.getClassLoader();
-        System.out.println(classLoader);
+        System.out.println("ClassLoadTest 类加载器："+classLoader);
         ClassLoader parent = ClassLoadTest.class.getClassLoader().getParent();
-        System.out.println(parent);
+        System.out.println("ClassLoadTest 父类加载器："+parent);
         ClassLoader parent1 = ClassLoadTest.class.getClassLoader().getParent().getParent();
-        System.out.println(parent1);
+        System.out.println("ClassLoadTest 父类加载器的父类："+parent1);
     }
 }

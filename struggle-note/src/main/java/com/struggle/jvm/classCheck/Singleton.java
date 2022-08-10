@@ -1,6 +1,4 @@
-package com.struggle.object.classCheck;
-
-import org.openjdk.jol.info.ClassLayout;
+package com.struggle.jvm.classCheck;
 
 /**
  * @author gavin
