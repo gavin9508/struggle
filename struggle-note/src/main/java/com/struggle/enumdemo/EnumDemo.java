@@ -2,6 +2,8 @@ package com.struggle.enumdemo;
 
 import org.junit.Test;
 
+import java.util.Arrays;
+
 public class EnumDemo {
 
     public static void main(String[] args){
@@ -50,6 +52,16 @@ public class EnumDemo {
         Day d2=Day.valueOf(Day.class,days[0].name());
         System.out.println("d:"+d);
         System.out.println("d2:"+d2);
+    }
+    @Test
+    public void test3(){
+        Day[] ds=Day.values();
+        Enum e = Day.MONDAY;
+        Class<?> clasz = e.getDeclaringClass();
+        if(clasz.isEnum()) {
+            Day[] dsz = (Day[]) clasz.getEnumConstants();
+            System.out.println("dsz:"+ Arrays.toString(dsz));
+        }
     }
 
 }

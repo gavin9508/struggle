@@ -255,3 +255,178 @@ protected Enum(String name, int ordinal) {
     }
 
 ```
+### 1.3.2 编译器生成的Values方法与ValueOf方法
+> values()方法和valueOf(String name)方法是编译器生成的static方法，因此从前面的分析中，在Enum类中并没出现values()方法，但valueOf()方法还是有出现的，只不过编译器生成的valueOf()方法需传递一个name参数，而Enum自带的静态方法valueOf()则需要传递两个方法，从前面反编译后的代码可以看出，编译器生成的valueOf方法最终还是调用了Enum类的valueOf方法，下面通过代码来演示这两个方法的作用：
+```
+Day[] days2 = Day.values();
+System.out.println("day2:"+Arrays.toString(days2));
+Day day = Day.valueOf("MONDAY");
+System.out.println("day:"+day);
+
+/**
+ 输出结果:
+ day2:[MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY, SUNDAY]
+ day:MONDAY
+ */
+```
+> 从结果可知道，values()方法的作用就是获取枚举类中的所有变量，并作为数组返回，而valueOf(String name)方法与Enum类中的valueOf方法的作用类似根据名称获取枚举变量，只不过编译器生成的valueOf方法更简洁些只需传递一个参数。这里我们还必须注意到，由于values()方法是由编译器插入到枚举类中的static方法，所以如果我们将枚举实例向上转型为Enum，那么values()方法将无法被调用，因为Enum类中并没有values()方法，valueOf()方法也是同样的道理，注意是一个参数的。
+```
+ //正常使用
+Day[] ds=Day.values();
+//向上转型Enum
+Enum e = Day.MONDAY;
+//无法调用,没有此方法
+//e.values();
+```
+## 1.4 枚举与Class对象
+> 上述我们提到当枚举实例向上转型为Enum类型后，values()方法将会失效，也就无法一次性获取所有枚举实例变量，但是由于Class对象的存在，即使不使用values()方法，还是有可能一次获取到所有枚举实例变量的，在Class对象中存在如下方法：
+
+| 返回类型    | 方法名称               | 方法说明                                  |
+|---------|:-------------------|---------------------------------------|
+| T[]     | getEnumConstants() | 返回该枚举类型的所有元素，如果Class对象不是枚举类型，则返回null。 |
+| boolean | isEnum()           | 当且仅当该类声明为源代码中的枚举时返回 true              |
+>因此通过getEnumConstants()方法，同样可以轻而易举地获取所有枚举实例变量下面通过代码来演示这个功能：
+```
+//正常使用
+Day[] ds=Day.values();
+//向上转型Enum
+Enum e = Day.MONDAY;
+//无法调用,没有此方法
+//e.values();
+//获取class对象引用
+Class<?> clasz = e.getDeclaringClass();
+if(clasz.isEnum()) {
+    Day[] dsz = (Day[]) clasz.getEnumConstants();
+    System.out.println("dsz:"+Arrays.toString(dsz));
+}
+
+/**
+   输出结果:
+   dsz:[MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY, SUNDAY]
+ */
+```
+> 正如上述代码所展示，通过Enum的class对象的getEnumConstants方法，我们仍能一次性获取所有的枚举实例常量。
+
+## 1.4 枚举的进阶用法
+> 在前面的分析中，我们都是基于简单枚举类型的定义，也就是在定义枚举时只定义了枚举实例类型，并没定义方法或者成员变量，实际上使用关键字enum定义的枚举类，除了不能使用继承(因为编译器会自动为我们继承Enum抽象类而Java只支持单继承，因此枚举类是无法手动实现继承的)，可以把enum类当成常规类，也就是说我们可以向enum类中添加方法和变量，甚至是mian方法，下面就来感受一把。
+### 1.4.1 向enum类添加方法与自定义构造函数
+> 重新定义一个日期枚举类，带有desc成员变量描述该日期的对于中文描述，同时定义一个getDesc方法，返回中文描述内容，自定义私有构造函数，在声明枚举实例时传入对应的中文描述，代码如下：
+
+```java
+package com.struggle.enumdemo;
+public enum Day2 {
+    MONDAY("星期一"),
+    TUESDAY("星期二"),
+    WEDNESDAY("星期三"),
+    THURSDAY("星期四"),
+    FRIDAY("星期五"),
+    SATURDAY("星期六"),
+    SUNDAY("星期日");//记住要用分号结束
+
+    private String desc;//中文描述
+
+    /**
+     * 私有构造,防止被外部调用
+     * @param desc
+     */
+    private Day2(String desc){
+        this.desc=desc;
+    }
+
+    /**
+     * 定义方法,返回描述,跟常规类的定义没区别
+     * @return
+     */
+    public String getDesc(){
+        return desc;
+    }
+
+    public static void main(String[] args){
+        for (Day2 day:Day2.values()) {
+            System.out.println("name:"+day.name()+
+                    ",desc:"+day.getDesc());
+        }
+    }
+}
+```
+> 从上述代码可知，在enum类中确实可以像定义常规类一样声明变量或者成员方法。但是我们必须注意到，如果打算在enum类中定义方法，务必在声明完枚举实例后使用分号分开，倘若在枚举实例前定义任何方法，编译器都将会报错，无法编译通过，同时即使自定义了构造函数且enum的定义结束，我们也永远无法手动调用构造函数创建枚举实例，毕竟这事只能由编译器执行。
+### 1.4.2 关于覆盖enum类方法
+> 既然enum类跟常规类的定义没什么区别（实际上enum还是有些约束的），那么覆盖父类的方法也不会是什么难说，可惜的是父类Enum中的定义的方法只有toString方法没有使用final修饰，因此只能覆盖toString方法，如下通过覆盖toString省去了getDesc方法：
+```java
+package com.struggle.enumdemo;
+
+public enum Day2 {
+    MONDAY("星期一"),
+    TUESDAY("星期二"),
+    WEDNESDAY("星期三"),
+    THURSDAY("星期四"),
+    FRIDAY("星期五"),
+    SATURDAY("星期六"),
+    SUNDAY("星期日");//记住要用分号结束
+
+    private String desc;//中文描述
+
+    /**
+     * 私有构造,防止被外部调用
+     * @param desc
+     */
+    private Day2(String desc){
+        this.desc=desc;
+    }
+
+    /**
+     * 覆盖
+     * @return
+     */
+    @Override
+    public String toString() {
+        return desc;
+    }
+    public static void main(String[] args){
+        for (Day2 day:Day2.values()) {
+            System.out.println("name:"+day.name()+
+                    ",desc:"+day.toString());
+        }
+    }
+}
+```
+### 1.4.3 enum类中定义抽象方法
+> 与常规抽象类一样，enum类允许我们为其定义抽象方法，然后使每个枚举实例都实现该方法，以便产生不同的行为方式，注意abstract关键字对于枚举类来说并不是必须的如下：
+```java
+package com.struggle.enumdemo;
+
+public enum EnumDemo3 {
+
+    FIRST{
+        @Override
+        public String getInfo() {
+            return "FIRST TIME";
+        }
+    },
+    SECOND{
+        @Override
+        public String getInfo() {
+            return "SECOND TIME";
+        }
+    }
+
+    ;
+
+    /**
+     * 定义抽象方法
+     * @return
+     */
+    public abstract String getInfo();
+
+    //测试
+    public static void main(String[] args){
+        System.out.println("F:"+EnumDemo3.FIRST.getInfo());
+        System.out.println("S:"+EnumDemo3.SECOND.getInfo());
+    }
+}
+```
+> 通过这种方式就可以轻而易举地定义每个枚举实例的不同行为方式。我们可能注意到，enum类的实例似乎表现出了多态的特性，可惜的是枚举类型的实例终究不能作为类型传递使用，就像下面的使用方式，编译器是不可能答应的：
+```
+//无法通过编译,毕竟EnumDemo3.FIRST是个实例对象
+ public void text(EnumDemo3.FIRST instance){ }
+```
