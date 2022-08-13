@@ -430,3 +430,90 @@ public enum EnumDemo3 {
 //无法通过编译,毕竟EnumDemo3.FIRST是个实例对象
  public void text(EnumDemo3.FIRST instance){ }
 ```
+### 1.4.4 enum类与接口
+> 由于Java单继承的原因，enum类并不能再继承其它类，但并不妨碍它实现接口，因此enum类同样是可以实现多接口的，如下：
+```java
+interface food{
+    void eat();
+}
+
+interface sport{
+    void run();
+}
+
+public enum EnumDemo2 implements food ,sport{
+    FOOD,
+    SPORT,
+    ; //分号分隔
+
+    @Override
+    public void eat() {
+        System.out.println("eat.....");
+    }
+
+    @Override
+    public void run() {
+        System.out.println("run.....");
+    }
+}
+```
+> 有时候，我们可能需要对一组数据进行分类，比如进行食物菜单分类而且希望这些菜单都属于food类型，appetizer(开胃菜)、mainCourse(主菜)、dessert(点心)、Coffee等，每种分类下有多种具体的菜式或食品，此时可以利用接口来组织，如下(代码引用自Thinking in Java)：
+```java
+public interface Food {
+  enum Appetizer implements Food {
+    SALAD, SOUP, SPRING_ROLLS;
+  }
+  enum MainCourse implements Food {
+    LASAGNE, BURRITO, PAD_THAI,
+    LENTILS, HUMMOUS, VINDALOO;
+  }
+  enum Dessert implements Food {
+    TIRAMISU, GELATO, BLACK_FOREST_CAKE,
+    FRUIT, CREME_CARAMEL;
+  }
+  enum Coffee implements Food {
+    BLACK_COFFEE, DECAF_COFFEE, ESPRESSO,
+    LATTE, CAPPUCCINO, TEA, HERB_TEA;
+  }
+}
+
+public class TypeOfFood {
+  public static void main(String[] args) {
+    Food food = Appetizer.SALAD;
+    food = MainCourse.LASAGNE;
+    food = Dessert.GELATO;
+    food = Coffee.CAPPUCCINO;
+  }
+} 
+```
+> 通过这种方式可以很方便组织上述的情景，同时确保每种具体类型的食物也属于Food，现在我们利用一个枚举嵌套枚举的方式，把前面定义的菜谱存放到一个Meal菜单中，通过这种方式就可以统一管理菜单的数据了。
+```java
+public enum Meal{
+  APPETIZER(Food.Appetizer.class),
+  MAINCOURSE(Food.MainCourse.class),
+  DESSERT(Food.Dessert.class),
+  COFFEE(Food.Coffee.class);
+  private Food[] values;
+  private Meal(Class<? extends Food> kind) {
+    //通过class对象获取枚举实例
+    values = kind.getEnumConstants();
+  }
+  public interface Food {
+    enum Appetizer implements Food {
+      SALAD, SOUP, SPRING_ROLLS;
+    }
+    enum MainCourse implements Food {
+      LASAGNE, BURRITO, PAD_THAI,
+      LENTILS, HUMMOUS, VINDALOO;
+    }
+    enum Dessert implements Food {
+      TIRAMISU, GELATO, BLACK_FOREST_CAKE,
+      FRUIT, CREME_CARAMEL;
+    }
+    enum Coffee implements Food {
+      BLACK_COFFEE, DECAF_COFFEE, ESPRESSO,
+      LATTE, CAPPUCCINO, TEA, HERB_TEA;
+    }
+  }
+} 
+```
