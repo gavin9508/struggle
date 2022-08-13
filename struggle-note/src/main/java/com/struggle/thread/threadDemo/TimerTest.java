@@ -1,6 +1,6 @@
 package com.struggle.thread.threadDemo;
 
-import com.demo.thread.ThreadUtil;
+import com.struggle.thread.ThreadUtil;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
