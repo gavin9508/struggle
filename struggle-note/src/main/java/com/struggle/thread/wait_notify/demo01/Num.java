@@ -1,4 +1,4 @@
-package com.struggle.thread.wait_notify;
+package com.struggle.thread.wait_notify.demo01;
 
 //共享数据
 class Num {

@@ -1,4 +1,4 @@
-package com.struggle.thread.wait_notify;
+package com.struggle.thread.wait_notify.demo01;
 
 /*
 	两个线程对1个共享的数据操作。
