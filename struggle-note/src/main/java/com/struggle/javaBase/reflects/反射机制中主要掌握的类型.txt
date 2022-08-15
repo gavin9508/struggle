@@ -1,0 +1,14 @@
+
+以下是SUN提供的反射机制中的类。
+
+java.lang.Class;		Class c = 0x1234;
+java.lang.reflect.Constructor;  Constructor c = 0x2356;
+java.lang.reflect.Field;	Field f = 0x1478;
+java.lang.reflect.Method;	Method m = 0x2589;
+java.lang.reflect.Modifier;	Modifier m = 0x2698;
+
+
+反射机制的作用：
+	1.反编译：.class-->.java
+	2.通过反射机制访问java类的属性，方法，构造方法等。
+
