@@ -18,7 +18,6 @@ public class ReflectTest07 {
         //1.获取类
         Class c = Class.forName("com.struggle.javaBase.reflects.CustomerService");
 
-
         //获取某个特定的方法
         //通过：方法名+形参列表
         Method m = c.getDeclaredMethod("login", String.class, String.class);

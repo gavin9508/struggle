@@ -3,6 +3,8 @@ package com.struggle.javaBase.reflects;
 import com.struggle.javaBase.domain.User;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 
 public class Test {
     public static void main(String[] args) {
@@ -27,6 +29,19 @@ public class Test {
         } catch (IllegalAccessException e) {
             e.printStackTrace();
         }
+        System.out.println("-----------------------------------------------------");
+        try {
+            Class<?> aClass = Class.forName("com.struggle.javaBase.reflects.CustomerService");
+            Method login = aClass.getDeclaredMethod("login", String.class, String.class);
+            Object obj = aClass.newInstance();
+            Object admin = login.invoke(obj, "admin", "123");
+            System.out.println(admin);
 
+            Method logout = aClass.getDeclaredMethod("logout");
+            logout.invoke(obj);
+        } catch (ClassNotFoundException | NoSuchMethodException | InvocationTargetException
+                | IllegalAccessException | InstantiationException e) {
+            e.printStackTrace();
+        }
     }
 }

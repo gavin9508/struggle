@@ -12,7 +12,8 @@ public class ReflectTest10 {
         //获取父类
         Class superClass = c.getSuperclass();
 
-        System.out.println(superClass.getName());
+        System.out.println("父类：" + superClass.getName());
+        System.out.println("父类接口：");
 
         //获取父接口
         Class[] ins = c.getInterfaces();
