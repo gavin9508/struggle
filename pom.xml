@@ -49,6 +49,10 @@
 
     <!--该元素描述了项目相关的所有依赖。 -->
     <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+        </dependency>
 
     </dependencies>
 
@@ -97,6 +101,7 @@
                 <directory>src/main/java</directory>
                 <includes>
                     <include>**/*.xml</include>
+                    <include>**/*.properties</include>
                 </includes>
             </resource>
         </resources>
