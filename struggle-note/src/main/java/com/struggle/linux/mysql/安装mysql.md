@@ -1,4 +1,11 @@
 # 1 linux下安装mysql
+
+> 若修改了/etc/my.cnf 配置文件 记得重启服务
+linux重启mysql的方法：
+
+> 1. 直接使用“service mysqld restart”或“service mysql restart”命令重启；
+> 2. 使用“/etc/init.d/mysqld restart”命令重启。
+
 ## 1.1 Linux系列--安装mysql8.0压缩版
 ### 1.1.1 下载方式
 ```text
