@@ -1,4 +1,4 @@
-# 1 linu x下安装jdk
+# 1 linux下安装jdk
 ## 1.1 Linux系列--安装jdk压缩版
 ### 1.1.1 下载方式
 ```text
