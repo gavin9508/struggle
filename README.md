@@ -14,5 +14,6 @@
 - [网络编程](https://github.com/gavin9508/struggle/blob/master/struggle-note/src/main/java/com/struggle/network/network.md)
 - [IO](https://github.com/gavin9508/struggle/blob/master/struggle-note/src/main/java/com/struggle/io/io.md)
 - [Java8 特性](https://github.com/gavin9508/struggle/blob/master/struggle-note/src/main/java/com/struggle/java8/java8新特性.MD)
+- [数据结构](https://github.com/gavin9508/struggle/blob/master/struggle-note/src/main/java/com/struggle/dataStructure/dataStructure.md)
 
 ## struggle-spring spring模块
