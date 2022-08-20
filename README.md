@@ -1,19 +1,20 @@
 # struggle
 
 趁年轻去努力
-## struggle-note 学习笔记
-- [volatile](https://github.com/gavin9508/struggle/blob/master/struggle-note/src/main/java/com/struggle/volatileTest/volatile.md)
-- [thread](https://github.com/gavin9508/struggle/blob/master/struggle-note/src/main/java/com/struggle/thread/thread.md)
-- [对象](https://github.com/gavin9508/struggle/blob/master/struggle-note/src/main/java/com/struggle/jvm/object.md)
-- [设计模式](https://github.com/gavin9508/struggle/blob/master/struggle-note/src/main/java/com/struggle/design/design.md)
-- [JVM](https://github.com/gavin9508/struggle/blob/master/struggle-note/src/main/java/com/struggle/jvm/jvm.md)
-- [锁相关](https://github.com/gavin9508/struggle/blob/master/struggle-note/src/main/java/com/struggle/thread/锁.MD)
-- [数据库](https://github.com/gavin9508/struggle/blob/master/struggle-note/src/main/java/com/struggle/database/normal.md)
-- [Java反射](https://github.com/gavin9508/struggle/blob/master/struggle-note/src/main/java/com/struggle/reflection/reflection.md)
-- [maven](https://github.com/gavin9508/struggle/blob/master/struggle-note/src/main/java/com/struggle/maven/maven.md)
-- [网络编程](https://github.com/gavin9508/struggle/blob/master/struggle-note/src/main/java/com/struggle/network/network.md)
-- [IO](https://github.com/gavin9508/struggle/blob/master/struggle-note/src/main/java/com/struggle/io/io.md)
-- [Java8 特性](https://github.com/gavin9508/struggle/blob/master/struggle-note/src/main/java/com/struggle/java8/java8新特性.MD)
+## 基础
 - [数据结构](https://github.com/gavin9508/struggle/blob/master/struggle-note/src/main/java/com/struggle/dataStructure/dataStructure.md)
+- [设计模式](https://github.com/gavin9508/struggle/blob/master/struggle-note/src/main/java/com/struggle/design/design.md)
+- [对象](https://github.com/gavin9508/struggle/blob/master/struggle-note/src/main/java/com/struggle/base/jvm/object.md)
+- [JVM](https://github.com/gavin9508/struggle/blob/master/struggle-note/src/main/java/com/struggle/base/jvm/jvm.md)
+- [thread](https://github.com/gavin9508/struggle/blob/master/struggle-note/src/main/java/com/struggle/base/thread/thread.md)
+- [Java反射](https://github.com/gavin9508/struggle/blob/master/struggle-note/src/main/java/com/struggle/base/reflection/reflection.md)
+- [IO](https://github.com/gavin9508/struggle/blob/master/struggle-note/src/main/java/com/struggle/base/io/io.md)
+- [网络编程](https://github.com/gavin9508/struggle/blob/master/struggle-note/src/main/java/com/struggle/base/network/network.md)
+- [JAVA锁](https://github.com/gavin9508/struggle/blob/master/struggle-note/src/main/java/com/struggle/base/thread/java锁.md)
+- [volatile](https://github.com/gavin9508/struggle/blob/master/struggle-note/src/main/java/com/struggle/base/volatileTest/volatile.md)
+- [Java8 特性](https://github.com/gavin9508/struggle/blob/master/struggle-note/src/main/java/com/struggle/base/java8/java8新特性.MD)
+- [数据库](https://github.com/gavin9508/struggle/blob/master/struggle-note/src/main/java/com/struggle/database/normal.md)
 
-## struggle-spring spring模块
+## spring
+- [maven](https://github.com/gavin9508/struggle/blob/master/struggle-note/src/main/java/com/struggle/spring/maven/maven.md)
+- [druid](https://github.com/gavin9508/struggle/blob/master/struggle-note/src/main/java/com/struggle/spring/druid/druid.md)
