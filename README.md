@@ -14,6 +14,7 @@
 - [volatile](https://github.com/gavin9508/struggle/blob/master/struggle-note/src/main/java/com/struggle/base/volatileTest/volatile.md)
 - [Java8 特性](https://github.com/gavin9508/struggle/blob/master/struggle-note/src/main/java/com/struggle/base/java8/java8新特性.MD)
 - [数据库](https://github.com/gavin9508/struggle/blob/master/struggle-note/src/main/java/com/struggle/database/normal.md)
+- [linux操作学习](https://github.com/gavin9508/struggle/blob/master/struggle-note/src/main/java/com/struggle/linux/linux操作学习.md)
 
 ## spring
 - [maven](https://github.com/gavin9508/struggle/blob/master/struggle-note/src/main/java/com/struggle/spring/maven/maven.md)
