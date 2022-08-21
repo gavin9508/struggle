@@ -13,7 +13,7 @@ import java.sql.SQLException;
 class StruggleSpringApplicationTests {
 
     @Autowired
-    DataSource dataSource;
+    private DataSource dataSource;
 
     @Test
     public void contextLoads() throws SQLException {
