@@ -3,6 +3,7 @@ package com.struggle.spring.common.config.druid;
 import com.alibaba.druid.pool.DruidDataSource;
 import com.alibaba.druid.support.http.StatViewServlet;
 import com.alibaba.druid.support.http.WebStatFilter;
+import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
@@ -17,6 +18,7 @@ import javax.sql.DataSource;
  * @date 2022/8/19 下午4:10
  * @Description Druid数据源配置
  */
+@Data
 @Configuration
 public class DruidConfig {
 
@@ -27,8 +29,9 @@ public class DruidConfig {
      */
     @ConfigurationProperties(prefix = "spring.datasource")
     @Bean
-    public DataSource druidDataSource() {
-        return new DruidDataSource();
+    public DataSource dataSource() {
+        DruidDataSource druidDataSource = new DruidDataSource();
+        return druidDataSource;
     }
 
 

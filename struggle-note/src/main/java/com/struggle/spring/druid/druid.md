@@ -21,6 +21,7 @@ Druid是一个开源地址，源代码地址：[https://github.com/alibaba/druid
 
 ### 3.配置数据源与监控
 [DruidConfig数据源配置](https://github.com/gavin9508/struggle/blob/master/struggle-spring/src/main/java/com/struggle/spring/common/config/druid/DruidConfig.java)
+
 [后台监控配置](https://github.com/gavin9508/struggle/blob/master/struggle-spring/src/main/java/com/struggle/spring/common/config/druid/DruidConfig.java)
 
 ### 4.访问监控

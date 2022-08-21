@@ -11,7 +11,7 @@ import java.nio.charset.StandardCharsets;
  */
 public class IoTest {
 
-    private String filePath = "src/main/java/com/struggle/io/file/";
+    private String filePath = "src/main/java/com/struggle/base/io/file/";
 
     @Test
     public void charTest() {

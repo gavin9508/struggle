@@ -43,7 +43,16 @@
     <dependencyManagement>
         <!--该元素描述了项目相关的所有依赖。 -->
         <dependencies>
-
+            <dependency>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <version>1.18.22</version>
+            </dependency>
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>druid</artifactId>
+                <version>1.2.8</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -90,12 +99,13 @@
             <!--这个元素描述了项目相关或测试相关的所有资源路径 -->
             <resource>
                 <!--描述存放资源的目录，该路径相对POM路径 -->
-                <directory>src/main/resources</directory>
+                <directory>src/main/java</directory>
             </resource>
             <resource>
                 <!--包含的模式列表，例如**/*.xml. -->
-                <directory>src/main/java</directory>
+                <directory>src/main/resource</directory>
                 <includes>
+                    <include>**/*.yml</include>
                     <include>**/*.xml</include>
                     <include>**/*.properties</include>
                 </includes>
