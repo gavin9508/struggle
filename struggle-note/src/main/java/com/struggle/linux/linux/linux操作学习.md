@@ -219,7 +219,7 @@ v：显示压缩，解压过程中处理的文件名
 f：指定归档的文件名，tar参数后面是归档的文件名
 x：从归档文件中释放文件，就是解压
 t：列出归档文件内容，查看文件内容
-c：解压到指定目录，使用方式 -C 目录，C是大写
+C：解压到指定目录，使用方式 -C 目录，C是大写
 ```
 #### 1.4.1.1 创建归档文件（压缩）
 ```text
@@ -243,8 +243,59 @@ c：解压到指定目录，使用方式 -C 目录，C是大写
 例如：tar -zcvf mypackge.tar.gz text01
 ```
 ![](img/tar_-zcvf_归档目录.png)
+### 1.4.2 查看归档（压缩）文件
+```text
+显示压缩文件的内容。
+语法：tar -tf 归档文件名
+t : 列出归档（压缩）文件的内容
+f : 归档文件名
+例如：tar -tf mypackge.tar.gz
+```
+![](img/tar_-tf_归档文件名.png)
+### 1.4.3 tar解压
+```text
+解压：释放压缩的文件内容
+
+语法：tar -zxvf 已归档的文件名
+参数：x:解压，从归档文件中释放文件
+    解压 mypackge.tar.gz
+    语法：tar -zxvf mypagcke.tar.gz
+```
+![](img/tar_-zxvf_已归档的文件名.png)
 ## 1.5 网络通讯
+### 1.5.1 查看 ip 信息： ifconfig或者ip addr
+```text
+语法 ifconfig
+例如：在任意位置输入 ifconfig
+```
+![](img/ifconfig.png)
+```text
+语法 ip addr
+例如：在任意位置输入 ip addr
+```
+![](img/ip_addr.png)
+### 1.5.2 测试网络连通： ping
+```text
+语法： ping ip或者域名
+例如：ping www.baidu.com
+查看之后，ctrl+C，退出查看，回到 Linux 命令
+```
+![](img/ping_域名.png)
+![](img/ping_ip.png)
 ## 1.6 网络访问
+### 1.6.1 curl ：使用 url 访问网络的文件传输工具。
+```text
+curl 是利用 URL 语法在命令行方式下工作的开源文件传输工具
+常用来①：测试网络访问；②：模拟用户访问
+抓取百度的首页内容
+例如：curl www.baidu.com
+```
+![](img/curl_测试网络访问.png)
+```text
+模拟用户访问
+例如：查询 studentId=5 的学生
+```
+![](img/curl_模拟用户访问.png)
 ## 1.7 权限管理
 ## 1.8 管道和重定向
 ## 1.9 vi 编辑命令
