@@ -166,7 +166,7 @@ Password 输入密码，linux 不显示输入的字符， 输入密码后直
 接按“Enter”.
 ```
 ![](img/su.png) 
-### 1.3.3 清楚屏幕：clear
+### 1.3.3 清除屏幕：clear
 例如：clear
 ### 1.3.4 重启系统：reboot
 例如：reboot
@@ -192,6 +192,11 @@ CMD:进程是有哪些程序启动的
 例如：在任意位置执行 ps -ef
 ```
 ![](img/ps_-ef.png)
+```text
+组合常用命令：ps -ef |grep 进程名称
+例如：ps -ef | grep mysql
+```
+![](img/ps_-ef_组合搜索.png)
 ### 1.3.7 kill 进程：kill
 ```text
 例如：
@@ -199,7 +204,45 @@ kill pid：杀掉进程
 kill -9 pid 强制杀掉进程
 不能随意使用，会被系统进程杀掉，程序不能使用
 ```
+![](img/kill_pid.png)
 ## 1.4 压缩/解压
+### 1.4.1 tar 压缩（归档） 
+```text
+tar 用来压缩和解压文件, tar 压缩后的文件也叫归档文件。
+语法: tar 参数 要压缩或解压的文件或目录
+```
+```text
+常用参数：
+z：使用压缩，生成的文件名是xxx.tar.gz这是linux中常用的压缩格式
+c：创建压缩文档
+v：显示压缩，解压过程中处理的文件名
+f：指定归档的文件名，tar参数后面是归档的文件名
+x：从归档文件中释放文件，就是解压
+t：列出归档文件内容，查看文件内容
+c：解压到指定目录，使用方式 -C 目录，C是大写
+```
+#### 1.4.1.1 创建归档文件（压缩）
+```text
+语法：tar -zcvf 归档文件名 要归档的文件列表
+例如：tar -zcvf myfile.tar.gz my.txt
+```
+![](img/tar_-zcvf_创建归档文件.png)
+#### 1.4.1.2 归档多个文档
+```text
+例如：tar -zcvf myfile01.tar.gz my.txt my01.txt
+```
+![](img/tar_-zcvf_压缩多个文档.png)
+```text
+也可以使用通配符 * 表示要压缩的文件名的一部分
+例如：tar -zcvf myfile02.tar.gz *.tx
+```
+![](img/tar_-zcvf_使用通配符压缩文件.png)
+#### 1.4.1.3 归档目录（即压缩目录）
+```text
+语法：tar -zcvf 归档文件名 归档目录
+例如：tar -zcvf mypackge.tar.gz text01
+```
+![](img/tar_-zcvf_归档目录.png)
 ## 1.5 网络通讯
 ## 1.6 网络访问
 ## 1.7 权限管理
