@@ -5,6 +5,7 @@
 - [数据结构](https://github.com/gavin9508/struggle/blob/master/struggle-note/src/main/java/com/struggle/dataStructure/dataStructure.md)
 - [设计模式](https://github.com/gavin9508/struggle/blob/master/struggle-note/src/main/java/com/struggle/design/design.md)
 - [对象](https://github.com/gavin9508/struggle/blob/master/struggle-note/src/main/java/com/struggle/base/jvm/object.md)
+- [集合](https://github.com/gavin9508/struggle/blob/master/struggle-note/src/main/java/com/struggle/base/list/List.md)
 - [JVM](https://github.com/gavin9508/struggle/blob/master/struggle-note/src/main/java/com/struggle/base/jvm/jvm.md)
 - [thread](https://github.com/gavin9508/struggle/blob/master/struggle-note/src/main/java/com/struggle/base/thread/thread.md)
 - [Java反射](https://github.com/gavin9508/struggle/blob/master/struggle-note/src/main/java/com/struggle/base/reflection/reflection.md)
