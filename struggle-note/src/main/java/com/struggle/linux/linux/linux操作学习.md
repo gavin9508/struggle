@@ -296,6 +296,26 @@ curl 是利用 URL 语法在命令行方式下工作的开源文件传输工具
 例如：查询 studentId=5 的学生
 ```
 ![](img/curl_模拟用户访问.png)
+### 1.6.2 wget :下载
+```text
+wget linux 上下载资源的工具，比如下载软件的安装包。一般软件都会给出一个下载地址
+先安装 wget 命令：yum -y install wget
+语法：wget 下载的资源的地址
+例如：下载一个 tomcat 软件。
+首先要得到 tomcat 的下载地址，同浏览器下载 tomcat，得到下载地址
+```
+![](img/tomcat官网.png)
+>点击左侧 Download“Tomcat 9”
+
+![](img/tomcat_选择版本.png)
+>不同的浏览器操作方式可能不同，选择复制下载地址
+
+![](img/tomcat_复制下载路径.png)
+```text
+tomcat 9的下载地址为：https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.65/bin/apache-tomcat-9.0.65.tar.gz
+在Linux中使用wget tomcat下载地址
+粘贴地址提示：右键有 copy 按钮或者使用 shift + insert 快捷键   
+```
 ## 1.7 权限管理
 ## 1.8 管道和重定向
 ## 1.9 vi 编辑命令
