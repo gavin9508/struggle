@@ -8,7 +8,7 @@
 ![](./img/map.png)
 
 ## 1. List
-List 存储的元素是有序的，可以存放重复的元素。
+    List 存储的元素是有序的，可以存放重复的元素。
 
 ### 1.1 ArrayList
 
@@ -33,7 +33,7 @@ List 存储的元素是有序的，可以存放重复的元素。
 * Stack 执行效率比较，使用双端队列 ArrayDeque 替代。
 
 ## 2. Set
-Set 存取的元素是无序的，不可以存放重复的元素。
+    Set 存取的元素是无序的，不可以存放重复的元素。
 
 ### 2.1 HashSet
 HashSet 底层由HashMap实现。
@@ -45,7 +45,7 @@ LinkedHashSet 的底层是链表和哈希表实现，元素的插入和取出顺
 TreeSet 底层是由红黑树实现的，元素是有序的。支持对元素自定义排序。
 
 ## 3. Queue
-Queue 是队列，通常遵循先进先出（FIFO）的原则。
+    Queue 是队列，通常遵循先进先出（FIFO）的原则。
 
 ### 3.1 ArrayDeque
 ArrayDeque 是一基于数组实现的双端队列。
@@ -64,3 +64,29 @@ LinkedList 也实现了Deque 接口，可以作为队列使用。
 PriorityQueue 是一种优先级队列，它的出队顺序与元素的优先级有关。
 
 元素可以实现 Comparable 接口或者 Comparator 接口来确定优先级。
+
+## 4. Map
+    Map 保存的是键值对，键要求保持唯一性，值可以重复。
+### 4.1 HashMap
+* HashMap 是无序的，线程不安全的，可以存储 null 的 key 和 value，但 null 作为键只能有一个。
+* JDK1.8 之前 HashMap 底层是数组和链表结合在一起使用也就是**链表散列**。
+* JDK1.8 之后 当链表长度大于阈值时，将链表转化为红黑树。
+* HashMap 默认的初始化大小为16。之后每次扩充为原来的2倍。
+
+### 4.2 Hashtable
+* Hashtable 是线程安全的。不允许有 null 键和 null 值。
+* Hashtable 默认的初始大小为 11，之后每次扩充为原来的 2n+1。
+
+~~Hashtable 基本被淘汰~~。
+
+### 4.3 LinkedHashMap
+LinkedHashMap 内部使用链表来记录插入/访问元素的顺序。
+
+### 4.4 TreeMap
+* TreeMap 由红黑树实现，是有序的。
+* TreeMap 的键实现 Comparable 接口或者 Comparator 接口来对元素自定义排序。
+
+### 4.5 ConcurrentHashMap
+ConcurrentHashMap 是线程安全的，1.7使用分段锁实现，1.8使用Node + CAS + synchronized。
+JDK1.7 底层采用分段的数组+链表实现。
+JDK1.8 采用的数据结构跟 HashMap1.8 的结构一样，数组+链表/红黑二叉树。
