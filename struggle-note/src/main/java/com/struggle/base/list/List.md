@@ -87,6 +87,36 @@ LinkedHashMap 内部使用链表来记录插入/访问元素的顺序。
 * TreeMap 的键实现 Comparable 接口或者 Comparator 接口来对元素自定义排序。
 
 ### 4.5 ConcurrentHashMap
-ConcurrentHashMap 是线程安全的，1.7使用分段锁实现，1.8使用Node + CAS + synchronized。
-JDK1.7 底层采用分段的数组+链表实现。
-JDK1.8 采用的数据结构跟 HashMap1.8 的结构一样，数组+链表/红黑二叉树。
+* ConcurrentHashMap 是线程安全的，1.7使用分段锁实现，1.8使用Node + CAS + synchronized。
+* JDK1.7 底层采用分段的数组+链表实现。
+* JDK1.8 采用的数据结构跟 HashMap1.8 的结构一样，数组+链表/红黑二叉树。
+
+### 4.6 Map的遍历方式
+1. 迭代器
+
+        Iterator<Map.Entry<Integer, String>> iterator = map.entrySet().iterator();
+        while (iterator.hasNext()) {
+            Map.Entry<Integer, String> entry = iterator.next();
+            System.out.println(entry.getKey());
+            System.out.println(entry.getValue());
+        }
+2. foreach遍历
+
+        for (Map.Entry<Integer, String> entry : map.entrySet()) {
+            System.out.println(entry.getKey());
+            System.out.println(entry.getValue());
+        }
+    
+3. Lambda 表达式
+
+        map.forEach((key, value) -> {
+            System.out.println(key);
+            System.out.println(value);
+        });
+
+4. Streams 
+
+        map.entrySet().stream().forEach((entry) -> {
+            System.out.println(entry.getKey());
+            System.out.println(entry.getValue());
+        });
