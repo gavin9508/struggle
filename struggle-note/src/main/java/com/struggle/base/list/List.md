@@ -120,3 +120,23 @@ LinkedHashMap 内部使用链表来记录插入/访问元素的顺序。
             System.out.println(entry.getKey());
             System.out.println(entry.getValue());
         });
+
+## 注：
+1. 集合去重：利用 Set 元素唯一的特性，可以快速对一个集合进行去重操作。
+2. 集合判空：判断集合的元素是否为空，使用 isEmpty() 方法。
+
+   ConcurrentHashMap的size() 方法要比isEmpty() 复杂。
+
+
+      public int size() {
+         long n = sumCount();
+         return ((n < 0L) ? 0 :
+         (n > (long)Integer.MAX_VALUE) ? Integer.MAX_VALUE :
+         (int)n);
+      }
+
+      public boolean isEmpty() {
+         return sumCount() <= 0L; 
+      }
+
+3. 不要在foreach 里进行元素的remove/add 操作。remove 元素请使用Iterator 方式，如果并发操作，需要对 Iterator 对象加锁。
