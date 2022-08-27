@@ -9,9 +9,10 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 public class BeanTestConfig implements WebMvcConfigurer {
 
     public void addInterceptors(InterceptorRegistry registry) {
-        //拦截器加载的时间点在springContext之前，此时filterService为null
+        //1. 拦截器加载的时间点在springContext之前，此时filterService为null
         registry.addInterceptor(new BeanTestInterceptor()).addPathPatterns("/filterTest/testB");
-        registry.addInterceptor(getInterceptor()).addPathPatterns("/filterTest/testC");//getInterceptor()
+        //2. getInterceptor()  注入了 BeanTestInterceptor
+        registry.addInterceptor(getInterceptor()).addPathPatterns("/filterTest/testC");
 
     }
 
