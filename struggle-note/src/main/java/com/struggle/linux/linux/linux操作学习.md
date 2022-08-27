@@ -353,6 +353,49 @@ E、 权限的尝试
 实验：切换到 centos 普通用户，查看 root目录的内容
 ```
 ![](img/ls_-l_centos.png)
+### 1.7.2 权限设置
+#### 1.7.2.1 修改文件权限 chmod
+```text
+语法 chmod UGO 权限 文件/目录
+例如: 先以 root 用户创建文件 aa.txt ,查看文件的权限，其他用户只
+要 r 读的权限。centos 对 aa.txt 来说就是其他用户。
+```
+![](img/root创建文件.png)
+```text
+adduser 时，创建用户的过程更像是一种人机对话，系统会提示你输入各种信息，然后会根据这些信息帮你创建新用户
+adduser centos
+passwd centos12345
+锁定用户 centos 账号(重开一个 session 测试)
+usermod -L centos 锁定后账号不可使用
+解锁用户 centos 账号
+usermod -U centos
+切换到 centos 用户执行， cat aa.txt是没有问题的
+```
+![](img/创建用户.png)
+```text
+修改 aa.txt 内容，执行 vi aa.txt ,在保存文件后报错
+```
+![](img/切换用户修改报错.png)
+```text
+使用 root 用户给 centos 分配 w 权限。切换回 root 用户（root 用
+户是 aa.txt 的拥有者）。分配权限方式：拥有者的不变 rw=6, 所在组
+设置 0 没有权限，主要给其他用户设置 rw=6
+```
+![](img/root_赋权.png)
+> 切换到 centos
+
+![](img/切换用户查看权限.png)
+```text
+注意要给 centos 分配对 aa.txt 的读（r）权限。否则不能查看文件内容
+```
+![](img/赋权细节.png)
+#### 1.7.2.2 修改文件拥有者 chown
+```text
+语法：chown 新的拥有者用户 被修改的文件
+例如：修改原来 root 拥有的文件 aa.txt 改为 centos, 拥有者有操作的读写权限。
+chown centos aa.txt
+```
+![](img/chown_新的拥有者用户_被修改的文件名.png)
 ## 1.8 管道和重定向
 ## 1.9 vi 编辑命令
 ## 1.10 安装软件命令
