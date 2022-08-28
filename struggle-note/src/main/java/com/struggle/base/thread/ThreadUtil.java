@@ -6,7 +6,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.concurrent.ExecutionException;
-import java.util.concurrent.FutureTask;
+import java.util.concurrent.Future;
 
 public class ThreadUtil {
     /**
@@ -102,10 +102,10 @@ public class ThreadUtil {
      * < T > 等同于 < T extends Object>
      * < ? > 等同于 < ? extends Object>
      */
-    public static <T> T getResult(FutureTask futureTask, Class<T> clazz) {
+    public static <T> T getResult(Future future, Class<T> clazz) {
         Object obj = null;
         try {
-            obj = futureTask.get();
+            obj = future.get();
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (ExecutionException e) {

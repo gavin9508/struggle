@@ -1,4 +1,4 @@
-package com.struggle.base.thread.threadDemo;
+package com.struggle.base.thread.callable;
 
 import com.struggle.base.thread.ThreadUtil;
 
@@ -10,9 +10,14 @@ import java.util.concurrent.FutureTask;
  * 1.继承java.lang.Thread类
  * 2.实现java.lang.Runnable接口
  * 3.实现java.util.concurrent.Callable接口
+ * <p>
+ * 第三种方式的优点是可以获取到线程的执行结果
+ * 缺点是效率比较低，在获取thread线程执行结果的时候，当前线程受阻，效率比较低。
+ *
+ * FurureTask：
+ * 第一种方式：FutureTask + Thread
  */
-public class CallableDemo {
-
+public class CallableDemo01 {
     public static void main(String[] args) {
         //1.创建一个未来任务类对象
         FutureTask futureTask = new FutureTask(new Callable() {
